@@ -89,13 +89,49 @@
         font-size: 16px;
     }
 
-    /* HOW IT WORKS */
-    .content {
-        width: 90%;
-        margin: 20px auto;
-        font-size: 17px;
-        line-height: 1.6;
-        flex: 1; /* allows footer to stay at the bottom */
+    .how-it-works-section {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.work-box {
+    background: rgba(0,0,0,0.3);
+    border: 2px solid gold;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.work-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.work-box p {
+    margin: 10px 0;
+    font-size: 15px;
+    color: white;
+}
+
+.join-btn-small {
+    display: inline-block;
+    margin-top: 8px;
+    background: gold;
+    color: black;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
     }
 
     /* FOOTER */
@@ -128,10 +164,32 @@
     <a href="reward.html" class="reward-btn">JOIN NOW 🔥</a>
 </div>
 
-<!-- HOW IT WORKS SECTION -->
-<div class="content">
-    <p>This is where your "How It Works" details will go.</p>
-</div>
+<!-- HOW IT WORKS GRID SECTION -->
+<div class="how-it-works-section">
+    <h2 style="text-align:center; color: gold; margin-top: 30px;">How It Works</h2>
+    <div class="works-grid">
+        <div class="work-box">
+            <img src="image1.jpg" alt="Step 1" class="work-img">
+            <p>Step 1 description goes here.</p>
+            <a href="reward.html" class="join-btn-small">Join Now</a>
+        </div>
+        <div class="work-box">
+            <img src="image2.jpg" alt="Step 2" class="work-img">
+            <p>Step 2 description goes here.</p>
+            <a href="reward.html" class="join-btn-small">Join Now</a>
+        </div>
+        <div class="work-box">
+            <img src="image3.jpg" alt="Step 3" class="work-img">
+            <p>Step 3 description goes here.</p>
+            <a href="reward.html" class="join-btn-small">Join Now</a>
+        </div>
+        <div class="work-box">
+            <img src="image4.jpg" alt="Step 4" class="work-img">
+            <p>Step 4 description goes here.</p>
+            <a href="reward.html" class="join-btn-small">Join Now</a>
+        </div>
+    </div>
+ 
 
 <!-- FOOTER -->
 <div class="footer">
