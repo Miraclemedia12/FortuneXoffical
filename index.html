@@ -3,37 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FortuneX - Home</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>FortuneX Official</title>
 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #b00000; /* deep red */
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: gold;
+        }
+
+        .join-btn {
+            background: gold;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .navbar a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px 10px;
+        }
+
+        .navbar a:hover {
+            border-bottom: 3px solid gold;
+        }
+
+        /* VIDEO SECTION */
+        .video-box {
+            width: 90%;
+            margin: 20px auto;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid gold;
+            border-radius: 12px;
+            height: 200px; 
+            text-align: center;
+            padding-top: 80px;
+            font-size: 18px;
+        }
+
+        /* HOW IT WORKS */
+        .content {
+            width: 90%;
+            margin: 20px auto;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            color: gold;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="logo-area">
-            <img src="logo.png" alt="FortuneX Logo" class="logo">
-            <h1 class="brand">FortuneX</h1>
-        </div>
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="logo">FortuneX</div>
+        <a href="reward.html" class="join-btn">Join Now</a>
+    </div>
 
-        <nav class="navbar">
-            <a href="index.html" class="active">Home</a>
-            <a href="reward.html">Rewards</a>
-            <a href="register.html">Register</a>
-        </nav>
-    </header>
+    <!-- NAVIGATION -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="reward.html">Rewards</a>
+        <a href="register.html">Register</a>
+    </div>
 
     <!-- VIDEO SECTION -->
-    <section class="video-box">
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
-            Your browser does not support the video.
-        </video>
-    </section>
+    <div class="video-box">
+        VIDEO WILL APPEAR HERE
+    </div>
 
-    <!-- JOIN NOW BUTTON -->
-    <div class="center">
-        <a href="reward.html" class="join-btn">Join Now</a>
+    <!-- HOW IT WORKS SECTION -->
+    <div class="content">
+        <!-- You will insert your details later -->
+        <p>This is where your "How It Works" details will go.</p>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        2025 FortuneX — All Rights Reserved
     </div>
 
 </body>
