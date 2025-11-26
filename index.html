@@ -1,59 +1,66 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FortuneX Platform</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
-  body { line-height:1.6; color:#fff; background:#990000; }header { text-align:center; padding:2rem 1rem; }
-header .logo { font-size:2rem; font-weight:bold; margin-bottom:1rem; display:block; color:#FFD700; }
-
-nav ul { list-style:none; display:flex; justify-content:center; gap:3rem; padding:0; margin-bottom:2rem; }
-nav ul li a { color:#FFD700; text-decoration:none; font-weight:bold; font-size:1.2rem; position:relative; }
-nav ul li a.active::after { content:""; display:block; width:100%; height:2px; background:#FFD700; margin-top:4px; }
-nav ul li a:hover { opacity:0.8; }
-
-.hero { text-align:center; padding:6rem 2rem; }
-.hero h1 { font-size:2.5rem; margin-bottom:1rem; }
-.hero p { font-size:1.2rem; margin-bottom:1.5rem; }
-
-.btn {
-display:inline-block;
-padding:0.75rem 2rem;
-background:#FFD700; /* Solid gold */
-color:#000;
-border-radius:5px;
-text-decoration:none;
-font-weight:bold;
-transition:0.3s;
-}
-.btn:hover { opacity:0.8; }
-
-footer { text-align:center; padding:2rem; background:#660000; color:#fff; margin-top:2rem; }
-
-/* Responsive for mobile */
-@media (max-width:600px){
-nav ul { flex-direction:column; gap:1rem; }
-.hero h1 { font-size:2rem; }
-.hero p { font-size:1rem; }
-}
-</style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FortuneX — Home</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body><header>
-  <div class="logo">FortuneX</div>
-  <nav>
-    <ul>
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="rewards.html">Rewards</a></li>
-      <li><a href="register.html">Register</a></li>
-    </ul>
-  </nav>
-</header><section class="hero">
-  <h1>Welcome to FortuneX</h1>
-  <p>The trusted platform for secure investments and financial growth.</p>
-  <a href="rewards.html" class="btn">Get Started</a>
-</section><footer>
-  &copy; 2025 FortuneX. All Rights Reserved.
-</footer></body>
+<body>
+
+  <!-- floating join now (top-right) -->
+  <a class="join-now" href="rewards.html">Join Now</a>
+
+  <header class="header-wrap">
+    <div class="logo">
+      <div class="mark">FX</div>
+      <div class="text">FortuneX</div>
+    </div>
+
+    <!-- top nav in row under logo -->
+    <nav class="top-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="rewards.html" class="">Rewards</a>
+      <a href="register.html" class="">Register</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="video-wrap">
+        <!-- Replace this block with a real video iframe or <video> when ready -->
+        <div class="video-placeholder center">
+          <!-- Example: paste <iframe src="https://www.youtube.com/embed/VIDEOID" ...> here -->
+          <div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px">Video / Promo</div>
+            <div style="opacity:0.85">Replace this with your video iframe or <code>&lt;video&gt;</code></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 center">
+        <h1 style="font-size:26px;font-weight:800;margin-top:14px">Welcome to FortuneX</h1>
+        <p class="opacity-80" style="max-width:680px;margin:8px auto">Trusted investment platform — start by joining today. Click <strong>Join Now</strong> to view plans.</p>
+        <div style="margin-top:14px">
+          <a class="btn" style="background:#FFD700;color:#000;padding:12px 18px;border-radius:28px;font-weight:800;text-decoration:none" href="rewards.html">Get Started</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- example notification (will show on bottom) -->
+  <div class="noti" id="liveNoti" style="display:none">
+    <div class="avatar">S</div>
+    <div>
+      <div><strong>Sarah</strong> from Abuja just subscribed for <strong>FortuneX Plus Plan ₦14,500</strong></div>
+      <div style="opacity:0.8;margin-top:6px;font-size:13px">just now</div>
+    </div>
+  </div>
+
+<script>
+  // show a sample notification after 2s to mimic the screenshot behavior
+  setTimeout(()=>{ const n = document.getElementById('liveNoti'); n.style.display='flex'; },2000);
+</script>
+
+</body>
 </html>
