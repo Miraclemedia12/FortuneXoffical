@@ -1,112 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FortuneX Official</title>
+    <title>FortuneX Official</title><style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #b00000; /* deep red */
+        font-family: Arial, sans-serif;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #b00000; /* deep red */
-            font-family: Arial, sans-serif;
-            color: white;
-        }
+    /* TOP BAR */
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+    }
 
-        /* TOP BAR */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+        color: gold;
+    }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: gold;
-        }
+    .join-btn {
+        background: gold;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+    }
 
-        .join-btn {
-            background: gold;
-            color: black;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-        }
+    /* NAVIGATION */
+    .navbar {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
 
-        /* NAVIGATION */
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
-            padding-bottom: 10px;
-        }
+    .navbar a {
+        color: gold;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 6px 10px;
+    }
 
-        .navbar a {
-            color: gold;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            padding: 6px 10px;
-        }
+    .navbar a:hover {
+        border-bottom: 3px solid gold;
+    }
 
-        .navbar a:hover {
-            border-bottom: 3px solid gold;
-        }
+    /* VIDEO SECTION */
+    .video-box {
+        width: 90%;
+        margin: 20px auto;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid gold;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
 
-        /* VIDEO SECTION */
-        .video-box {
-            width: 90%;
-            margin: 20px auto;
-            background: rgba(0,0,0,0.3);
-            border: 2px solid gold;
-            border-radius: 12px;
-            height: 250px; 
-            text-align: center;
-            padding-top: 100px;
-            font-size: 18px;
-        }
+    .video-box video {
+        width: 100%;
+        height: 500px; /* taller for long TikTok-style videos */
+        border-radius: 10px;
+        object-fit: cover; /* ensures video fills the box nicely */
+    }
 
-        /* HOW IT WORKS */
-        .content {
-            width: 90%;
-            margin: 20px auto;
-            font-size: 17px;
-            line-height: 1.6;
-        }
+    .video-box .reward-btn {
+        display: inline-block;
+        margin-top: 15px;
+        background: gold;
+        color: black;
+        padding: 10px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+    }
 
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 15px 0;
-            color: gold;
-            margin-top: 40px;
-            font-size: 16px;
-        }
-    </style>
+    /* HOW IT WORKS */
+    .content {
+        width: 90%;
+        margin: 20px auto;
+        font-size: 17px;
+        line-height: 1.6;
+        flex: 1; /* allows footer to stay at the bottom */
+    }
+
+    /* FOOTER */
+    .footer {
+        text-align: center;
+        padding: 15px 0;
+        color: gold;
+        font-size: 16px;
+        background: #800000; /* optional slightly darker red */
+    }
+</style>
 
 </head>
-<body>
+<body><!-- TOP BAR -->
+<div class="topbar">
+    <div class="logo">FortuneX</div>
+    <a href="reward.html" class="join-btn">Join Now</a>
+</div>
 
-    <!-- TOP BAR -->
-    <div class="topbar">
-        <div class="logo">FortuneX</div>
-        <a href="reward.html" class="join-btn">Join Now</a>
-    </div>
+<!-- NAVIGATION -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="reward.html">Rewards</a>
+    <a href="register.html">Register</a>
+</div>
 
-    <!-- NAVIGATION -->
-    <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="reward.html">Rewards</a>
-        <a href="register.html">Register</a>
-    </div>
+<!-- VIDEO SECTION -->
+<div class="video-box">
+    <video src="video.mp4" controls></video>
+    <a href="reward.html" class="reward-btn">Go to Rewards</a>
+</div>
 
-    <!-- VIDEO SECTION -->
+<!-- HOW IT WORKS SECTION -->
+<div class="content">
+    <p>This is where your "How It Works" details will go.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    2025 FortuneX — All Rights Reserved
+</div>
+
+</body>
+</html>    <!-- VIDEO SECTION -->
     <div class="video-box">
         <video controls width="100%">
     <source src="video.mp4" type="video/mp4">
