@@ -1,66 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FortuneX — Home</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortuneX - Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- floating join now (top-right) -->
-  <a class="join-now" href="rewards.html">Join Now</a>
-
-  <header class="header-wrap">
-    <div class="logo">
-      <div class="mark">FX</div>
-      <div class="text">FortuneX</div>
-    </div>
-
-    <!-- top nav in row under logo -->
-    <nav class="top-nav">
-      <a href="index.html" class="active">Home</a>
-      <a href="rewards.html" class="">Rewards</a>
-      <a href="register.html" class="">Register</a>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="video-wrap">
-        <!-- Replace this block with a real video iframe or <video> when ready -->
-        <div class="video-placeholder center">
-          <!-- Example: paste <iframe src="https://www.youtube.com/embed/VIDEOID" ...> here -->
-          <div>
-            <div style="font-size:18px;font-weight:700;margin-bottom:8px">Video / Promo</div>
-            <div style="opacity:0.85">Replace this with your video iframe or <code>&lt;video&gt;</code></div>
-          </div>
+    <!-- HEADER -->
+    <header>
+        <div class="logo-area">
+            <img src="logo.png" alt="FortuneX Logo" class="logo">
+            <h1 class="brand">FortuneX</h1>
         </div>
-      </div>
 
-      <div class="mt-12 center">
-        <h1 style="font-size:26px;font-weight:800;margin-top:14px">Welcome to FortuneX</h1>
-        <p class="opacity-80" style="max-width:680px;margin:8px auto">Trusted investment platform — start by joining today. Click <strong>Join Now</strong> to view plans.</p>
-        <div style="margin-top:14px">
-          <a class="btn" style="background:#FFD700;color:#000;padding:12px 18px;border-radius:28px;font-weight:800;text-decoration:none" href="rewards.html">Get Started</a>
-        </div>
-      </div>
+        <nav class="navbar">
+            <a href="index.html" class="active">Home</a>
+            <a href="reward.html">Rewards</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <!-- VIDEO SECTION -->
+    <section class="video-box">
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video.
+        </video>
     </section>
-  </main>
 
-  <!-- example notification (will show on bottom) -->
-  <div class="noti" id="liveNoti" style="display:none">
-    <div class="avatar">S</div>
-    <div>
-      <div><strong>Sarah</strong> from Abuja just subscribed for <strong>FortuneX Plus Plan ₦14,500</strong></div>
-      <div style="opacity:0.8;margin-top:6px;font-size:13px">just now</div>
+    <!-- JOIN NOW BUTTON -->
+    <div class="center">
+        <a href="reward.html" class="join-btn">Join Now</a>
     </div>
-  </div>
-
-<script>
-  // show a sample notification after 2s to mimic the screenshot behavior
-  setTimeout(()=>{ const n = document.getElementById('liveNoti'); n.style.display='flex'; },2000);
-</script>
 
 </body>
 </html>
