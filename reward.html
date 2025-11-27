@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,146 +11,137 @@
             font-family: Arial, sans-serif;
             background: #0d0d0d;
             color: white;
-        }    header {
-        background: #111;
-        padding: 15px;
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-    }
+        }
 
-    nav {
-        background: #1a1a1a;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
+        header {
+            background: #111;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-    nav a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-    }
+        nav {
+            background: #1a1a1a;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
-    h2 {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 26px;
-        color: white;
-    }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
 
-    .container {
-        width: 90%;
-        margin: 20px auto;
-    }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 26px;
+            color: white;
+        }
 
-    .reward-box {
-        background: #1a1a1a;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-    }
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
 
-    .plan-title {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: white;
-    }
+        .reward-box {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
 
-    .price-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
+        .plan-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
 
-    .old-price {
-        text-decoration: line-through;
-        color: #ff4d4d;
-    }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
 
-    .new-price {
-        color: gold;
-    }
+        .old-price {
+            text-decoration: line-through;
+            color: #ff4d4d;
+        }
 
-    .timer-box {
-        background: #000;
-        padding: 10px;
-        border-radius: 8px;
-        text-align: center;
-        font-size: 18px;
-        margin-top: 10px;
-    }
+        .new-price {
+            color: gold;
+        }
 
-    .timer-label {
-        font-size: 14px;
-        color: #bbbbbb;
-    }
+        .timer-box {
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 10px;
+        }
 
-    .price-with-badge {
-        position: relative;
-        display: inline-block;
-    }
+        .timer-label {
+            font-size: 14px;
+            color: #bbbbbb;
+        }
+    </style>
+</head>
 
-    .badge {
-        position: absolute;
-        top: -12px;
-        right: -10px;
-        background: gold;
-        color: black;
-        font-size: 11px;
-        font-weight: bold;
-        padding: 3px 8px;
-        border-radius: 12px;
-    }
+<body>
 
-    .footer {
-        text-align: center;
-        padding: 15px 0;
-        color: gold;
-        font-size: 16px;
-        background: #800000;
-        margin-top: auto;
-    }
-</style>
+<header>FORTUNE X</header>
 
-</head><body><header>REWARD PAGE</header><nav>
-    <a href="index.html">Home</a>
-    <a href="rewards.html">Rewards</a>
-    <a href="register.html">Register</a>
-</nav><h2>Reward Structure</h2><div class="container"><!-- STARTER PLAN -->
-<div class="reward-box">
-    <div class="plan-title">Starter Plan</div>
-    <div class="price-row">
-        <span class="old-price">₦14,000</span>
-        <span class="new-price">₦7,500</span>
-    </div>
-    <div class="timer-box">
-        <div class="timer-label">Discount ends in</div>
-        <div id="timer1">03:00:00</div>
-    </div>
-</div>
+<nav>
+    <a href="index.html">HOME</a>
+    <a href="rewards.html">REWARDS</a>
+    <a href="register.html">REGISTER</a>
+</nav>
 
-<!-- PLUS PLAN -->
-<div class="reward-box">
-    <div class="plan-title">Plus Plan</div>
-    <div class="price-row">
-        <span class="old-price">₦28,000</span>
-        <div class="price-with-badge">
-            <span class="new-price">₦14,500</span>
-            <span class="badge">Base Value</span>
+<h2>REWARD STRUCTURE</h2>
+
+<div class="container">
+
+    <!-- STARTER PLAN -->
+    <div class="reward-box">
+        <div class="plan-title">Starter Plan</div>
+
+        <div class="price-row">
+            <span class="old-price">₦14,000</span>
+            <span class="new-price">₦7,500</span>
+        </div>
+
+        <div class="timer-box">
+            <div class="timer-label">Discount ends in</div>
+            <div id="timer1">03:00:00</div>
         </div>
     </div>
-    <div class="timer-box">
-        <div class="timer-label">Discount ends in</div>
-        <div id="timer2">03:00:00</div>
+
+    <!-- PLUS PLAN -->
+    <div class="reward-box">
+        <div class="plan-title">Plus Plan</div>
+
+        <div class="price-row">
+            <span class="old-price">₦28,000</span>
+            <span class="new-price">₦14,500</span>
+        </div>
+
+        <div class="timer-box">
+            <div class="timer-label">Discount ends in</div>
+            <div id="timer2">03:00:00</div>
+        </div>
     </div>
+
 </div>
 
-</div><script>
+<script>
     function startTimer(elementId, durationHours) {
         let totalSeconds = durationHours * 3600;
 
@@ -169,7 +161,7 @@
 
     startTimer("timer1", 3);
     startTimer("timer2", 3);
-</script><div class="footer">
-    2025 FortuneX — All Rights Reserved
-</div></body>
+</script>
+
+</body>
 </html>
