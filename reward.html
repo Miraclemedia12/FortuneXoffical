@@ -126,10 +126,34 @@
         border-radius: 10px;
         width: 100%;
         text-align: center;
-        font-size: 17px;
         line-height: 1.5em;
     }
 
+    /* Styling for the Withdrawal details to look like the image (Gold/White text, bold) */
+    .withdraw-box .label {
+        color: white;
+        font-weight: 900;
+        font-size: 1.2em;
+        display: block; /* Ensures separation */
+        margin-top: 5px;
+    }
+
+    .withdraw-box .value {
+        color: gold;
+        font-weight: bold;
+        font-size: 1.5em;
+        display: block; /* Ensures separation */
+        line-height: 1.2;
+    }
+
+    .withdraw-box .star-header {
+        color: gold;
+        font-weight: bold;
+        font-size: 1.5em;
+        display: block;
+        margin-bottom: 10px;
+    }
+    
     .plan-button {
         background: gold;
         color: black;
@@ -166,6 +190,31 @@
         background: #800000;
     }
 </style>
+<script>
+// Block Register click unless a plan is selected
+function handleRegisterClick(e) {
+    if (!localStorage.getItem('selectedPlan')) {
+        e.preventDefault();
+        alert('Access Denied! Select a plan before clicking Register. Redirecting you to the Reward page...');
+        window.location.href = 'reward.html';
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const registerLink = document.querySelector('.navbar a[href="register.html"]');
+    if (registerLink) {
+        registerLink.addEventListener('click', handleRegisterClick);
+    }
+
+    // When a plan is clicked, store selection
+    document.querySelectorAll('.plan-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            localStorage.setItem('selectedPlan', btn.textContent.trim());
+            window.location.href = 'register.html';
+        });
+    });
+});
+</script>
 </head>
 <body>
 <div class="logo">FortuneX</div>
@@ -177,16 +226,14 @@
 <div class="title">Reward Structure</div>
 <main>
 
-    <!-- STARTER PLAN -->
     <div class="reward-box">
-        <div class="plan-label">Startup Plan</div>
+        <div class="plan-label">Starter Plan</div>
         <div class="price-container">
             <div class="old-price">₦14,000</div>
             <div class="new-price">₦7,500</div>
         </div>
         <div class="timer">Discount ends in <span id="countdown1">03:00:00</span></div>
 
-        <!-- Earnings Boxes -->
         <div class="earn-box">💎 $3.5 Hourly Earnings</div>
         <div class="earn-box">💎 $2.5 Hourly Earnings</div>
         <div class="earn-box">💎 $2 Hourly Earnings</div>
@@ -195,14 +242,16 @@
         <div class="earn-box">💎 $0.5 per Comedy Video View</div>
 
         <div class="withdraw-box">
-            Withdrawal Window: Saturday 9AM - 6PM<br>
-            Minimum Withdrawal: ₦5,000
+            <span class="label">⏰ Withdrawal Window:</span>
+            <span class="value">Saturday's 9AM - 6PM</span>
+            <br>
+            <span class="label">💰 Minimum Withdrawal:</span>
+            <span class="value">₦5,000</span>
         </div>
 
         <button class="plan-button" onclick="location.href='register.html'">Get Starter Plan</button>
     </div>
 
-    <!-- PLUS PLAN -->
     <div class="reward-box">
         <div class="best-plan">Best Plan</div>
         <div class="plan-label">Plus Plan</div>
@@ -220,8 +269,12 @@
         <div class="earn-box">💎 $1 per Comedy Video View</div>
 
         <div class="withdraw-box">
-            Withdrawal Window: Daily 9AM - 6PM<br>
-            Minimum Withdrawal: ₦5,000
+            <span class="star-header">★ DAILY WITHDRAWAL ★</span>
+            <span class="label">Withdrawal Window:</span>
+            <span class="value">Daily 9AM - 6PM</span>
+            <br>
+            <span class="label">Minimum Withdrawal:</span>
+            <span class="value">₦5,000</span>
         </div>
 
         <button class="plan-button" onclick="location.href='register.html'">Get Plus Plan</button>
