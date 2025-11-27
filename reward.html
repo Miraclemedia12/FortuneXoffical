@@ -67,11 +67,17 @@
             text-align: center;
         }
 
+        /* PRICE ROW (horizontal) */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .old-price {
             font-size: 22px;
             color: white;
             text-decoration: line-through;
-            margin-bottom: 10px;
         }
 
         .new-price {
@@ -109,14 +115,18 @@
 
     <!-- BOX 1 -->
     <div class="reward-box">
-        <div class="old-price">₦14,000 lass="new-price">₦7,500<</div>
-         
+        <div class="price-row">
+            <div class="old-price">₦14,000</div>
+            <div class="new-price">₦7,500</div>
+        </div>
     </div>
 
     <!-- BOX 2 -->
     <div class="reward-box">
-        <div class="old-price">₦14,000</div>
-        <div class="new-price">₦7,500</div>
+        <div class="price-row">
+            <div class="old-price">₦28,000</div>
+            <div class="new-price">₦14,500</div>
+        </div>
     </div>
 
     <!-- FOOTER -->
@@ -125,4 +135,4 @@
     </div>
 
 </body>
-</html> 
+</html>
