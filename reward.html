@@ -14,6 +14,13 @@
         min-height: 100vh;
     }
 
+    main {
+        flex: 1 0 auto; /* make main grow to push footer down */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     /* LOGO */
     .logo {
         font-size: 35px;
@@ -56,7 +63,8 @@
     /* REWARD BOX */
     .reward-box {
         width: 90%;
-        margin: 30px auto;
+        max-width: 400px;
+        margin: 30px 0;
         background: rgba(0,0,0,0.3);
         border: 2px solid gold;
         border-radius: 12px;
@@ -65,6 +73,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
     }
 
     .plan-label {
@@ -74,18 +83,24 @@
         margin-bottom: 10px;
     }
 
+    .price-container {
+        display: flex;
+        justify-content: center;
+        align-items: baseline; /* aligns old/new price nicely */
+        gap: 15px; /* space between old and new price */
+        margin-bottom: 15px;
+    }
+
     .old-price {
-        font-size: 22px;
+        font-size: 22px; /* smaller */
         color: white;
         text-decoration: line-through;
-        margin-bottom: 10px;
     }
 
     .new-price {
-        font-size: 40px;
+        font-size: 40px; /* bigger */
         font-weight: bold;
         color: gold;
-        margin-bottom: 15px;
     }
 
     .timer {
@@ -111,7 +126,7 @@
     /* Curved "Best Plan" Label */
     .best-plan {
         position: absolute;
-        top: -40px;
+        top: -35px;
         right: 10px;
         font-size: 18px;
         font-weight: bold;
@@ -124,45 +139,54 @@
 
     /* FOOTER */
     .footer {
+        flex-shrink: 0;
         text-align: center;
         padding: 15px 0;
         color: gold;
         font-size: 16px;
         background: #800000;
-        margin-top: auto;
     }
 </style></head>
 <body><!-- LOGO -->
-<div class="logo">FortuneX</div>
+<div class="logo">FORTUNEX</div>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="reward.html">Rewards</a>
-    <a href="register.html">Register</a>
+    <a href="index.html">HOME</a>
+    <a href="reward.html">REWARDS</a>
+    <a href="register.html">REGISTER</a>
 </div>
 
 <!-- TITLE -->
-<div class="title">Reward Structure</div>
+<div class="title">REWARD STRUCTURE</div>
 
-<!-- BOX 1 -->
-<div class="reward-box">
-    <div class="plan-label">Startup Plan</div>
-    <div class="old-price">₦14,000</div>
-    <div class="new-price">₦7,500</div>
-    <div class="timer" id="timer1">03:00:00</div>
-    <button class="plan-button">Get Startup Plan</button>
-</div>
+<!-- MAIN CONTENT -->
+<main>
 
-<!-- BOX 2 -->
-<div class="reward-box" style="position: relative;">
-    <div class="best-plan">Best Plan</div>
-    <div class="plan-label">Loss Plan</div>
-    <div class="old-price">₦28,000</div>
-    <div class="new-price">₦14,500</div>
-    <div class="timer" id="timer2">03:00:00</div>
-    <button class="plan-button">Get Loss Plan</button>
-</div>
+    <!-- BOX 1 -->
+    <div class="reward-box">
+        <div class="plan-label">STARTER PLAN</div>
+        <div class="price-container">
+            <div class="old-price">₦14,000</div>
+            <div class="new-price">₦7,500</div>
+        </div>
+        <div class="timer" id="timer1">03:00:00</div>
+        <button class="plan-button">GET STARTER PLAN</button>
+    </div>
+
+    <!-- BOX 2 -->
+    <div class="reward-box">
+        <div class="best-plan">Best value</div>
+        <div class="plan-label">PLUS PLAN</div>
+        <div class="price-container">
+            <div class="old-price">₦28,000</div>
+            <div class="new-price">₦14,500</div>
+        </div>
+        <div class="timer" id="timer2">03:00:00</div>
+        <button class="plan-button">GET PLUS PLAN</button>
+    </div>
+
+</main>
 
 <!-- FOOTER -->
 <div class="footer">
