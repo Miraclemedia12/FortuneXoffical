@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base Colors & Layout */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Radial gradient background matching the screenshots */
+            background: radial-gradient(circle at center, #800000 0%, #300000 70%, #000000 100%);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* LOGO & NAV */
+        .logo-container {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .logo {
+            font-size: 35px;
+            font-weight: 900;
+            color: gold;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .navbar a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px 10px;
+            transition: all 0.3s;
+        }
+
+        .navbar a[href="register.html"] {
+            border-bottom: 3px solid gold;
+        }
+
+        .navbar a:hover { 
+            color: #ffcc00; 
+        }
+
+        /* Main Payment Card/Container */
+        .payment-container {
+            width: 95%;
+            max-width: 450px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            flex-grow: 1;
+        }
+
+        /* Payment Details */
+        .main-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .payment-for {
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .plan-name-display {
+            font-size: 24px;
+            font-weight: 900;
+            color: gold;
+            display: block;
+        }
+
+        /* WARNING BOX: Now used for the Timer */
+        .warning-box {
+            background-color: #8b0000; /* Darker red */
+            border: 1px solid red;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* Timer Style */
+        #payment-timer {
+            text-align: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: yellow; /* Highlight the timer */
+        }
+
+        /* Account Details Rows */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            font-size: 18px;
+        }
+
+        .detail-row:last-of-type {
+            border-bottom: none;
+            margin-top: 15px;
+        }
+
+        .detail-label {
+            color: white;
+            font-weight: 700;
+        }
+
+        .detail-value {
+            color: gold;
+            font-weight: 900;
+            text-align: right;
+        }
+
+        .account-number-display {
+            font-size: 26px; /* Larger text for the actual number */
+        }
+        
+        .amount-display {
+            font-size: 32px; /* Extra large for the amount */
+            background-color: rgba(255, 215, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background-color: gold;
+            color: black;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .copy-btn:hover {
+            background-color: #ffcc00;
+        }
+
+        /* Confirmation Text & Button */
+        .confirmation-text {
+            text-align: center;
+            margin: 30px 0 20px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .confirm-payment-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to bottom, #FFD700, #FFA500); /* Gold gradient */
+            color: #111;
+            text-align: center;
+            text-decoration: none; 
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
+            transition: transform 0.2s;
+        }
+        
+        .confirm-payment-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.7);
+        }
+
+        /* Footer */
+        .footer {
+            flex-shrink: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .whatsapp-icon {
+            width: 30px;
+            height: 30px;
+            fill: #25D366;
+            margin-bottom: 5px;
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid gold;
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            animation: fadeInScale 0.3s ease-out;
+        }
+        
+        .modal-icon {
+            color: #25D366; /* WhatsApp Green/Success Green */
+            font-size: 50px;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+        
+        .modal-title {
+            color: #25D366;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal-message {
+            color: white;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo-container">
+    <div class="logo">FortuneX</div>
+</div>
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="reward.html">Rewards</a>
+    <a href="register.html">Register</a>
+</div>
+
+<div class="payment-container">
+    <div class="main-title">Complete Your Payment</div>
+    
+    <div class="payment-for">
+        You are paying for:
+        <!-- Dynamic content: selected plan name -->
+        <span id="plan-name-display" class="plan-name-display">...</span>
+    </div>
+
+    <!-- WARNING BOX: Now displays the 1-hour countdown timer -->
+    <div class="warning-box">
+        <div id="payment-timer" class="text-center font-bold text-xl">
+            Processing payment 01:00:00
+        </div>
+    </div>
+
+    <!-- Account Details -->
+    <div class="account-details">
+        
+        <!-- Bank Name -->
+        <div class="detail-row">
+            <span class="detail-label">Bank Name:</span>
+            <div class="detail-value">
+                <span id="bank-name">Paystack-Titan</span>
+                <button class="copy-btn" onclick="copyToClipboard('bank-name', this)">Copy</button>
+            </div>
+        </div>
+        
+        <!-- Account Name (UPDATED) -->
+        <div class="detail-row">
+            <span class="detail-label">Account Name:</span>
+            <div class="detail-value">
+                <span id="account-name">Chipper cash/Okon Miracle</span>
+                <button class="copy-btn" onclick="copyToClipboard('account-name', this)">Copy</button>
+            </div>
+        </div>
+        
+        <!-- Account Number (UPDATED) -->
+        <div class="detail-row">
+            <span class="detail-label">Account Number:</span>
+            <div class="detail-value">
+                <!-- Placeholder account number -->
+                <span id="account-number" class="account-number-display">9998411556</span>
+                <button class="copy-btn" onclick="copyToClipboard('account-number', this)">Copy</button>
+            </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="detail-row last-detail-row">
+            <span class="detail-label">Amount:</span>
+            <span id="amount-display" class="detail-value amount-display">₦0</span>
+        </div>
+        
+    </div>
+
+    <div class="confirmation-text">
+        After payment, click the button below to confirm. Your account will be activated shortly.
+    </div>
+    
+    <!-- Changed back to a button with the new click handler -->
+    <button id="confirm-payment-trigger" class="confirm-payment-btn">I Have Made Payment</button>
+</div>
+
+<div class="footer">
+    <!-- WhatsApp Icon SVG -->
+    <svg class="whatsapp-icon mx-auto" viewBox="0 0 24 24">
+        <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
+    </svg>
+    © 2025 FortuneX. All rights reserved.
+</div>
+
+
+<!-- Payment Processing Modal -->
+<div id="processing-modal" class="modal">
+    <div class="modal-content">
+        <!-- Success Icon (Checkmark SVG) -->
+        <div class="modal-icon mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <path d="m9 11 3 3L22 4"/>
+            </svg>
+        </div>
+
+        <div class="modal-title">Payment Processing!!</div>
+        <div class="modal-message">
+            Thank you for joining FortuneX. Your payment is being verified.
+            <br><br>
+            You will be redirected to WhatsApp to share your receipt.
+        </div>
+    </div>
+</div>
+
+<script>
+// WhatsApp Contact Details
+const WA_NUMBER = "2347063780224"; 
+const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt in my DM.";
+const REDIRECT_DELAY_MS = 6000; // 6 seconds
+
+// Function to handle copying text to the clipboard
+function copyToClipboard(elementId, buttonElement) {
+    const copyText = document.getElementById(elementId).textContent.trim();
+    
+    // Create a temporary input element
+    const tempInput = document.createElement('textarea');
+    tempInput.value = copyText;
+    document.body.appendChild(tempInput);
+    
+    // Select the text and execute copy command
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); // For mobile devices
+    try {
+        document.execCommand('copy');
+        
+        // Visual feedback
+        buttonElement.textContent = 'Copied!';
+        setTimeout(() => {
+            buttonElement.textContent = 'Copy';
+        }, 1500);
+        
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        // Fallback for environments where execCommand fails
+        buttonElement.textContent = 'Error!';
+        setTimeout(() => {
+            buttonElement.textContent = 'Copy';
+        }, 1500);
+    }
+    
+    // Remove the temporary element
+    document.body.removeChild(tempInput);
+}
+
+// Function to extract plan name and amount from the localStorage string
+function parsePlanString(planString) {
+    // Example: "FortuneX Starter (₦7,500)"
+    const match = planString.match(/(.*?)\s\(₦(.*)\)/);
+    if (match) {
+        return {
+            name: match[1].trim(), 
+            amount: '₦' + match[2].trim() 
+        };
+    }
+    return { name: "Error: Plan Not Found", amount: "₦0" };
+}
+
+// Function to start the 1-hour countdown timer
+function startCountdown() {
+    // 1 hour in seconds
+    let totalSeconds = 60 * 60; 
+    const timerDisplay = document.getElementById('payment-timer');
+
+    function updateTimer() {
+        if (!timerDisplay) {
+            clearInterval(timerInterval);
+            return;
+        }
+        
+        if (totalSeconds < 0) {
+            timerDisplay.textContent = "Payment window expired. Please refresh the page.";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        const displayHours = String(hours).padStart(2, '0');
+        const displayMinutes = String(minutes).padStart(2, '0');
+        const displaySeconds = String(seconds).padStart(2, '0');
+
+        timerDisplay.textContent = `Processing payment ${displayHours}:${displayMinutes}:${displaySeconds}`;
+        totalSeconds--;
+    }
+
+    // Run immediately and then every second
+    updateTimer();
+    const timerInterval = setInterval(updateTimer, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const selectedPlanString = localStorage.getItem('selectedPlan');
+    const planDetails = parsePlanString(selectedPlanString || "");
+
+    const planNameDisplay = document.getElementById('plan-name-display');
+    const amountDisplay = document.getElementById('amount-display');
+    const confirmButton = document.getElementById('confirm-payment-trigger');
+    const modal = document.getElementById('processing-modal');
+
+    // 1. Populate Dynamic Content
+    if (planNameDisplay && amountDisplay) {
+        planNameDisplay.textContent = planDetails.name;
+        amountDisplay.textContent = planDetails.amount;
+    } else {
+        console.error('Payment page loaded without a selected plan.');
+    }
+    
+    // 2. Start the 1-hour countdown timer on page load
+    startCountdown();
+    
+    // 3. Add Payment Confirmation Logic
+    if (confirmButton) {
+        confirmButton.addEventListener('click', () => {
+            // A. Show the processing modal
+            modal.style.display = 'flex';
+            
+            // B. Prepare the WhatsApp URL (including plan name for tracking)
+            const fullWAMessage = `${WA_MESSAGE_BASE} (Plan: ${planDetails.name}).`;
+            const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(fullWAMessage)}`;
+            
+            // C. Wait for 6 seconds then redirect
+            setTimeout(() => {
+                window.location.href = waLink;
+            }, REDIRECT_DELAY_MS); 
+        });
+    }
+});
+</script>
+</body>
+</html>
+
