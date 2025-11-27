@@ -1,128 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FortuneX Rewards</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FortuneX Rewards</title><style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #b00000;
+        font-family: Arial, sans-serif;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #b00000;
-            font-family: Arial, sans-serif;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+    /* LOGO */
+    .logo {
+        font-size: 35px;
+        font-weight: bold;
+        color: gold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* NAVIGATION */
+    .navbar {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .navbar a {
+        color: gold;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 6px 10px;
+    }
+
+    .navbar a:hover {
+        border-bottom: 3px solid gold;
+    }
+
+    /* TITLE */
+    .title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: 15px;
+        color: white;
+    }
+
+    /* REWARD BOX */
+    .reward-box {
+        width: 90%;
+        margin: 30px auto;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid gold;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan-label {
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .old-price {
+        font-size: 22px;
+        color: white;
+        text-decoration: line-through;
+        margin-bottom: 10px;
+    }
+
+    .new-price {
+        font-size: 40px;
+        font-weight: bold;
+        color: gold;
+        margin-bottom: 15px;
+    }
+
+    .timer {
+        font-size: 20px;
+        color: #00ffcc;
+        margin-bottom: 15px;
+    }
+
+    .plan-button {
+        background: gold;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .plan-button:hover {
+        background: #ffcc00;
+    }
+
+    /* Curved "Best Plan" Label */
+    .best-plan {
+        position: absolute;
+        top: -40px;
+        right: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        transform: rotate(-15deg);
+        background: gold;
+        padding: 5px 15px;
+        border-radius: 50% 50% 0 0;
+    }
+
+    /* FOOTER */
+    .footer {
+        text-align: center;
+        padding: 15px 0;
+        color: gold;
+        font-size: 16px;
+        background: #800000;
+        margin-top: auto;
+    }
+</style></head>
+<body><!-- LOGO -->
+<div class="logo">FortuneX</div>
+
+<!-- NAV -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="reward.html">Rewards</a>
+    <a href="register.html">Register</a>
+</div>
+
+<!-- TITLE -->
+<div class="title">Reward Structure</div>
+
+<!-- BOX 1 -->
+<div class="reward-box">
+    <div class="plan-label">Startup Plan</div>
+    <div class="old-price">₦14,000</div>
+    <div class="new-price">₦7,500</div>
+    <div class="timer" id="timer1">03:00:00</div>
+    <button class="plan-button">Get Startup Plan</button>
+</div>
+
+<!-- BOX 2 -->
+<div class="reward-box" style="position: relative;">
+    <div class="best-plan">Best Plan</div>
+    <div class="plan-label">Loss Plan</div>
+    <div class="old-price">₦28,000</div>
+    <div class="new-price">₦14,500</div>
+    <div class="timer" id="timer2">03:00:00</div>
+    <button class="plan-button">Get Loss Plan</button>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    2025 FortuneX — All Rights Reserved
+</div>
+
+<script>
+// Countdown timer function for 3 hours (10800 seconds)
+function startTimer(duration, display) {
+    let timer = duration, hours, minutes, seconds;
+    setInterval(function () {
+        hours = parseInt(timer / 3600, 10);
+        minutes = parseInt((timer % 3600) / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = hours + ":" + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = 0;
         }
+    }, 1000);
+}
 
-        /* LOGO */
-        .logo {
-            font-size: 35px;
-            font-weight: bold;
-            color: gold;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* NAVIGATION */
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .navbar a {
-            color: gold;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            padding: 6px 10px;
-        }
-
-        .navbar a:hover {
-            border-bottom: 3px solid gold;
-        }
-
-        /* TITLE */
-        .title {
-            text-align: center;
-            font-size: 26px;
-            font-weight: bold;
-            margin-top: 15px;
-            color: white;
-        }
-
-        /* LONG BOX */
-        .reward-box {
-            width: 90%;
-            margin: 20px auto;
-            background: rgba(0,0,0,0.3);
-            border: 2px solid gold;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .old-price {
-            font-size: 22px;
-            color: white;
-            text-decoration: line-through;
-            margin-bottom: 10px;
-        }
-
-        .new-price {
-            font-size: 40px;
-            font-weight: bold;
-            color: gold;
-        }
-
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 15px 0;
-            color: gold;
-            font-size: 16px;
-            background: #800000;
-            margin-top: auto;
-        }
-    </style>
-
-</head>
-<body>
-
-    <!-- LOGO -->
-    <div class="logo">FortuneX</div>
-
-    <!-- NAV -->
-    <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="reward.html">Rewards</a>
-        <a href="register.html">Register</a>
-    </div>
-
-    <!-- TITLE -->
-    <div class="title">Reward Structure</div>
-
-    <!-- BOX 1 -->
-    <div class="reward-box">
-        <div class="old-price">₦14,000</div>
-        <div class="new-price">₦7,500</div>
-    </div>
-
-    <!-- BOX 2 -->
-    <div class="reward-box">
-        <div class="old-price">₦14,000</div>
-        <div class="new-price">₦7,500</div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        2025 FortuneX — All Rights Reserved
-    </div>
-
-</body>
+window.onload = function () {
+    let duration = 3 * 60 * 60; // 3 hours in seconds
+    startTimer(duration, document.querySelector('#timer1'));
+    startTimer(duration, document.querySelector('#timer2'));
+};
+</script></body>
 </html>
