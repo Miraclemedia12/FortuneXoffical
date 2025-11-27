@@ -17,7 +17,7 @@
             min-height: 100vh;
         }
 
-        /* LOGO CENTER */
+        /* LOGO */
         .logo {
             font-size: 35px;
             font-weight: bold;
@@ -47,31 +47,37 @@
             border-bottom: 3px solid gold;
         }
 
-        /* REWARD BOXES */
-        .container {
-            width: 90%;
-            margin: 25px auto;
+        /* TITLE */
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: white;
         }
 
+        /* LONG BOX */
         .reward-box {
+            width: 90%;
+            margin: 20px auto;
             background: rgba(0,0,0,0.3);
             border: 2px solid gold;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 25px;
+            text-align: center;
         }
 
-        .reward-box h2 {
-            margin: 0 0 10px 0;
+        .old-price {
             font-size: 22px;
-            color: gold;
+            color: white;
+            text-decoration: line-through;
+            margin-bottom: 10px;
         }
 
-        .reward-box p {
-            margin: 0;
-            font-size: 16px;
-            line-height: 1.5;
-            color: white;
+        .new-price {
+            font-size: 40px;
+            font-weight: bold;
+            color: gold;
         }
 
         /* FOOTER */
@@ -91,22 +97,35 @@
     <!-- LOGO -->
     <div class="logo">FortuneX</div>
 
-    <!-- NAVIGATION -->
+    <!-- NAV -->
     <div class="navbar">
         <a href="index.html">Home</a>
         <a href="reward.html">Rewards</a>
         <a href="register.html">Register</a>
     </div>
 
-    <!-- REWARD CONTENT -->
-    <div class="container">
+    <!-- TITLE -->
+    <div class="title">Reward Structure</div>
 
-        <div class="reward-box">
-            <h2>🎁 Daily Login Bonus</h2>
-            <p>Earn a reward every day you log in. Keep your streak to unlock higher bonuses!</p>
-        </div>
+    <!-- BOX 1 -->
+    <div class="reward-box">
+        <div class="old-price">₦14,000</div>
+        <div class="new-price">₦7,500</div>
+    </div>
 
-        <div class="reward-box">
+    <!-- BOX 2 -->
+    <div class="reward-box">
+        <div class="old-price">₦14,000</div>
+        <div class="new-price">₦7,500</div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        2025 FortuneX — All Rights Reserved
+    </div>
+
+</body>
+</html>        <div class="reward-box">
             <h2>🏆 Weekly Tasks</h2>
             <p>Complete your weekly FortuneX missions and claim exclusive rewards.</p>
         </div>
