@@ -15,7 +15,7 @@
     }
 
     main {
-        flex: 1 0 auto; /* make main grow to push footer down */
+        flex: 1 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -86,27 +86,32 @@
     .price-container {
         display: flex;
         justify-content: center;
-        align-items: baseline; /* aligns old/new price nicely */
-        gap: 15px; /* space between old and new price */
+        align-items: baseline;
+        gap: 15px;
         margin-bottom: 15px;
     }
 
     .old-price {
-        font-size: 22px; /* smaller */
+        font-size: 22px;
         color: white;
         text-decoration: line-through;
     }
 
     .new-price {
-        font-size: 40px; /* bigger */
+        font-size: 40px;
         font-weight: bold;
         color: gold;
     }
 
+    /* Timer styling */
     .timer {
-        font-size: 20px;
-        color: #00ffcc;
+        font-size: 18px;
+        color: white;
+        background-color: #ff0000;
+        padding: 8px 15px;
+        border-radius: 8px;
         margin-bottom: 15px;
+        display: inline-block;
     }
 
     .plan-button {
@@ -170,19 +175,19 @@
             <div class="old-price">₦14,000</div>
             <div class="new-price">₦7,500</div>
         </div>
-             <div class="timer">Discount ends in <span id="countdown2">03:00:00</span></div>
+        <div class="timer">Discount ends in <span id="countdown1">03:00:00</span></div>
         <button class="plan-button">GET STARTER PLAN</button>
     </div>
 
     <!-- BOX 2 -->
     <div class="reward-box">
-        <div class="best-plan">Best value</div>
+        <div class="best-plan">Best Plan</div>
         <div class="plan-label">PLUS PLAN</div>
         <div class="price-container">
             <div class="old-price">₦28,000</div>
             <div class="new-price">₦14,500</div>
         </div>
-             <div class="timer">Discount ends in <span id="countdown2">03:00:00</span></div>
+        <div class="timer">Discount ends in <span id="countdown2">03:00:00</span></div>
         <button class="plan-button">GET PLUS PLAN</button>
     </div>
 
@@ -194,7 +199,7 @@
 </div>
 
 <script>
-// Countdown timer function for 3 hours (10800 seconds)
+// Countdown timer function for 3 hours
 function startTimer(duration, display) {
     let timer = duration, hours, minutes, seconds;
     setInterval(function () {
@@ -216,8 +221,8 @@ function startTimer(duration, display) {
 
 window.onload = function () {
     let duration = 3 * 60 * 60; // 3 hours in seconds
-    startTimer(duration, document.querySelector('#timer1'));
-    startTimer(duration, document.querySelector('#timer2'));
+    startTimer(duration, document.querySelector('#countdown1'));
+    startTimer(duration, document.querySelector('#countdown2'));
 };
 </script></body>
 </html>
