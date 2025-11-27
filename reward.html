@@ -1,233 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FortuneX Rewards</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: #b00000;
-        font-family: Arial, sans-serif;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortuneX Rewards</title>
+    <!-- Tailwind is included for general utility, though custom CSS is dominant -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    main {
-        flex: 1 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    <style>
+        /* BASE STYLES */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Radial gradient background matching the screenshots */
+            background: radial-gradient(circle at center, #800000 0%, #300000 70%, #000000 100%);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    .logo {
-        font-size: 35px;
-        font-weight: bold;
-        color: gold;
-        text-align: center;
-        margin-top: 20px;
-    }
+        main {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 10px;
+        }
 
-    .navbar {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin-top: 10px;
-        padding-bottom: 10px;
-    }
+        /* LOGO & NAV */
+        .logo {
+            font-size: 35px;
+            font-weight: 900; /* Extra bold */
+            color: gold;
+            text-align: center;
+            margin-top: 20px;
+        }
 
-    .navbar a {
-        color: gold;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 18px;
-        padding: 6px 10px;
-    }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
 
-    .navbar a:hover { border-bottom: 3px solid gold; }
+        .navbar a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px 10px;
+            transition: all 0.3s;
+        }
 
-    .title {
-        text-align: center;
-        font-size: 26px;
-        font-weight: bold;
-        margin-top: 15px;
-        color: white;
-    }
+        .navbar a[href="reward.html"] {
+            border-bottom: 3px solid gold;
+        }
+        
+        .navbar a:hover { 
+            color: #ffcc00; 
+        }
 
-    .reward-box {
-        width: 90%;
-        max-width: 400px;
-        margin: 30px 0;
-        background: rgba(0,0,0,0.3);
-        border: 2px solid gold;
-        border-radius: 12px;
-        padding: 25px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-    }
+        /* TITLE */
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: white;
+            margin-bottom: 10px;
+        }
 
-    .plan-label {
-        font-size: 22px;
-        font-weight: bold;
-        color: white;
-        margin-bottom: 10px;
-    }
+        /* REWARD BOXES */
+        .reward-box {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid gold;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
 
-    .price-container {
-        display: flex;
-        justify-content: center;
-        align-items: baseline;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
+        .plan-label {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+        }
 
-    .old-price {
-        font-size: 22px;
-        color: white;
-        text-decoration: line-through;
-    }
+        /* PRICE ROW (horizontal) */
+        .price-container {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
 
-    .new-price {
-        font-size: 40px;
-        font-weight: bold;
-        color: gold;
-    }
+        .old-price {
+            font-size: 22px;
+            color: #ccc;
+            text-decoration: line-through;
+        }
 
-    .timer {
-        font-size: 18px;
-        color: white;
-        background-color: #ff0000;
-        padding: 8px 15px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        display: inline-block;
-    }
+        .new-price {
+            font-size: 44px;
+            font-weight: 900;
+            color: gold;
+        }
 
-    .earn-box {
-        width: 100%;
-        background: rgba(255,255,255,0.1);
-        padding: 12px;
-        margin: 6px 0;
-        border-radius: 8px;
-        font-size: 18px;
-        text-align: left;
-    }
+        .timer {
+            font-size: 16px;
+            color: white;
+            background-color: #ff0000;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
 
-    .withdraw-box {
-        margin-top: 15px;
-        border: 1px solid gold;
-        padding: 12px;
-        border-radius: 10px;
-        width: 100%;
-        text-align: center;
-        line-height: 1.5em;
-    }
+        .earn-box {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            margin: 6px 0;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: left;
+            font-weight: 500;
+        }
 
-    /* Styling for the Withdrawal details to look like the image (Gold/White text, bold) */
-    .withdraw-box .label {
-        color: white;
-        font-weight: 900;
-        font-size: 1.2em;
-        display: block; /* Ensures separation */
-        margin-top: 5px;
-    }
+        /* WITHDRAWAL BOX */
+        .withdraw-box {
+            margin-top: 20px;
+            border: 1px solid gold;
+            background: rgba(255, 255, 0, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            line-height: 1.6em;
+        }
 
-    .withdraw-box .value {
-        color: gold;
-        font-weight: bold;
-        font-size: 1.5em;
-        display: block; /* Ensures separation */
-        line-height: 1.2;
-    }
+        .withdraw-box .star-header {
+            color: gold;
+            font-weight: bold;
+            font-size: 1.3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .withdraw-box .label {
+            color: white;
+            font-weight: 700;
+            font-size: 1em;
+            display: block;
+        }
 
-    .withdraw-box .star-header {
-        color: gold;
-        font-weight: bold;
-        font-size: 1.5em;
-        display: block;
-        margin-bottom: 10px;
-    }
-    
-    .plan-button {
-        background: gold;
-        color: black;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-weight: bold;
-        font-size: 18px;
-        cursor: pointer;
-        margin-top: 15px;
-    }
+        .withdraw-box .value {
+            color: gold;
+            font-weight: 900;
+            font-size: 1.2em;
+            display: block;
+        }
+        
+        /* ACTION BUTTON */
+        .plan-button {
+            width: 100%;
+            background: linear-gradient(to right, #FFD700, #FFA500); /* Gold gradient */
+            color: #111;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-weight: 900;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+            transition: transform 0.2s;
+        }
 
-    .plan-button:hover { background: #ffcc00; }
+        .plan-button:hover { 
+            background: #ffcc00; 
+            transform: translateY(-2px);
+        }
 
-    .best-plan {
-        position: absolute;
-        top: -35px;
-        right: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        transform: rotate(-15deg);
-        background: gold;
-        padding: 5px 15px;
-        border-radius: 50% 50% 0 0;
-    }
+        .best-plan {
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            background: gold;
+            padding: 5px 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            /* Optional: slight rotation for flair */
+            transform: rotate(3deg);
+        }
 
-    .footer {
-        flex-shrink: 0;
-        text-align: center;
-        padding: 15px 0;
-        color: gold;
-        font-size: 16px;
-        background: #800000;
-    }
-</style>
-<script>
-// Block Register click unless a plan is selected
-function handleRegisterClick(e) {
-    if (!localStorage.getItem('selectedPlan')) {
-        e.preventDefault();
-        alert('Access Denied! Select a plan before clicking Register. Redirecting you to the Reward page...');
-        window.location.href = 'reward.html';
-    }
-}
+        /* FOOTER */
+        .footer {
+            flex-shrink: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            color: gold;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+        }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const registerLink = document.querySelector('.navbar a[href="register.html"]');
-    if (registerLink) {
-        registerLink.addEventListener('click', handleRegisterClick);
-    }
+        /* CUSTOM MODAL STYLES */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    // When a plan is clicked, store selection
-    document.querySelectorAll('.plan-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            localStorage.setItem('selectedPlan', btn.textContent.trim());
-            window.location.href = 'register.html';
-        });
-    });
-});
-</script>
+        .modal-content {
+            background-color: #300000; /* Dark red/maroon */
+            border: 2px solid gold;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-title {
+            color: gold;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .modal-message {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-close-btn {
+            background: gold;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: #ffcc00;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
 </head>
 <body>
+
 <div class="logo">FortuneX</div>
 <div class="navbar">
-    <a href="index.html">HOME</a>
+    <a href="index.html">Home</a>
     <a href="reward.html">Rewards</a>
-    <a href="register.html">Register</a>
+    <!-- The register link is now handled by JavaScript -->
+    <a href="register.html" id="register-link">Register</a>
 </div>
-<div class="title">REWARD STRUCTURE</div>
+<div class="title">Reward Structure</div>
 <main>
 
+    <!-- STARTER PLAN BOX -->
     <div class="reward-box">
-        <div class="plan-label">STARTER PLAN</div>
+        <div class="plan-label">Startup Plan</div>
         <div class="price-container">
             <div class="old-price">₦14,000</div>
             <div class="new-price">₦7,500</div>
@@ -244,17 +315,17 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="withdraw-box">
             <span class="label">⏰ Withdrawal Window:</span>
             <span class="value">Saturday's 9AM - 6PM</span>
-            <br>
             <span class="label">💰 Minimum Withdrawal:</span>
             <span class="value">₦5,000</span>
         </div>
 
-        <button class="plan-button" onclick="location.href='register.html'">GET STARTER PLAN</button>
+        <button class="plan-button" data-plan="FortuneX Starter (₦7,500)">Get Starter Plan</button>
     </div>
 
+    <!-- PLUS PLAN BOX -->
     <div class="reward-box">
-        <div class="best-plan">Best Value</div>
-        <div class="plan-label">PLUS PLAN</div>
+        <div class="best-plan">Best Plan</div>
+        <div class="plan-label">Plus Plan</div>
         <div class="price-container">
             <div class="old-price">₦28,000</div>
             <div class="new-price">₦14,500</div>
@@ -272,24 +343,40 @@ window.addEventListener('DOMContentLoaded', () => {
             <span class="star-header">★ DAILY WITHDRAWAL ★</span>
             <span class="label">Withdrawal Window:</span>
             <span class="value">Daily 9AM - 6PM</span>
-            <br>
             <span class="label">Minimum Withdrawal:</span>
             <span class="value">₦5,000</span>
         </div>
 
-        <button class="plan-button" onclick="location.href='register.html'">GET PLUS PLAN</button>
+        <button class="plan-button" data-plan="FortuneX Plus (₦14,500)">Get Plus Plan</button>
     </div>
 
 </main>
-<div class="footer">&copy;2025 FortuneX — All Rights Reserved</div>
+<div class="footer">2025 FortuneX — All Rights Reserved</div>
+
+<!-- Custom Modal Box -->
+<div id="access-denied-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-title">Access Denied!</div>
+        <div class="modal-message">
+            You must select a reward plan (Starter or Plus) before registering.
+        </div>
+        <button class="modal-close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
 
 <script>
+// --- TIMER LOGIC ---
 function startTimer(duration, display) {
-    let timer = duration, hours, minutes, seconds;
-    setInterval(function () {
-        hours = parseInt(timer / 3600, 10);
-        minutes = parseInt((timer % 3600) / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+    let timer = duration;
+    if (display.timerInterval) {
+        clearInterval(display.timerInterval);
+    }
+    
+    display.timerInterval = setInterval(function () {
+        let hours = parseInt(timer / 3600, 10);
+        let minutes = parseInt((timer % 3600) / 60, 10);
+        let seconds = parseInt(timer % 60, 10);
 
         hours = hours < 10 ? "0" + hours : hours;
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -297,15 +384,53 @@ function startTimer(duration, display) {
 
         display.textContent = hours + ":" + minutes + ":" + seconds;
 
-        if (--timer < 0) { timer = 0; }
+        if (--timer < 0) { 
+            timer = 0; 
+            clearInterval(display.timerInterval);
+            display.textContent = "00:00:00";
+        }
     }, 1000);
 }
 
-window.onload = function () {
-    let duration = 3 * 60 * 60;
+// --- MODAL LOGIC ---
+function showModal() {
+    document.getElementById('access-denied-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('access-denied-modal').style.display = 'none';
+}
+
+// --- MAIN SETUP ---
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Timers
+    const duration = 3 * 60 * 60; // 3 hours in seconds
     startTimer(duration, document.querySelector('#countdown1'));
     startTimer(duration, document.querySelector('#countdown2'));
-};
+
+    // 2. Plan Selection Logic
+    document.querySelectorAll('.plan-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selectedPlan = btn.getAttribute('data-plan');
+            localStorage.setItem('selectedPlan', selectedPlan);
+            window.location.href = 'register.html';
+        });
+    });
+
+    // 3. Register Link Block (Core Requirement)
+    const registerLink = document.getElementById('register-link');
+    if (registerLink) {
+        registerLink.addEventListener('click', (e) => {
+            // Check if a plan is stored in localStorage
+            if (!localStorage.getItem('selectedPlan')) {
+                e.preventDefault(); // Stop the navigation
+                showModal(); // Display the custom modal message
+            }
+            // If a plan is selected, the navigation proceeds normally (to register.html)
+        });
+    }
+});
 </script>
 </body>
 </html>
+
