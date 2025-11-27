@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortuneX Registration</title>
+    <!-- Use Tailwind CDN for modern styling, even though we use custom CSS primarily for theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base Colors & Layout */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Radial gradient background matching the screenshots */
+            background: radial-gradient(circle at center, #800000 0%, #300000 70%, #000000 100%);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nav Bar & Logo */
+        .logo {
+            font-size: 35px;
+            font-weight: 900;
+            color: gold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .navbar a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px 10px;
+            transition: all 0.3s;
+        }
+
+        .navbar a[href="register.html"] {
+            border-bottom: 3px solid gold;
+        }
+
+        .navbar a:hover { 
+            color: #ffcc00; 
+        }
+
+        /* Main Registration Card/Container */
+        .register-container {
+            width: 95%;
+            max-width: 450px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            flex-grow: 1;
+        }
+
+        /* Titles and Selected Plan Display */
+        .main-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .plan-selection {
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 900; /* Extra bold for the plan name */
+            color: gold;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px; /* Larger padding for better touch target */
+            border: none;
+            border-radius: 15px; /* More rounded corners */
+            background-color: #5d0707; /* Dark reddish input background */
+            color: white;
+            font-size: 17px;
+            box-sizing: border-box;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s, border 0.3s;
+        }
+
+        .form-group input::placeholder {
+            color: #ddd; 
+            font-weight: 400;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            background-color: #700a0a;
+            border: 1px solid gold;
+        }
+        
+        /* Payment Button */
+        .payment-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to bottom, #FFD700, #FFA500); /* Gold gradient */
+            color: #111;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 30px;
+        }
+
+        .payment-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 165, 0, 0.7);
+        }
+
+        /* Footer */
+        .footer {
+            flex-shrink: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+            font-size: 14px;
+        }
+
+        .whatsapp-icon {
+            width: 30px;
+            height: 30px;
+            fill: #25D366;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo">FortuneX</div>
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="reward.html">Rewards</a>
+    <a href="register.html">Register</a>
+</div>
+
+<div class="register-container">
+    <div class="main-title">Create Your Account</div>
+    
+    <div class="plan-selection">
+        You have selected:
+        <!-- Dynamic text will be inserted here by JavaScript -->
+        <span id="selected-plan-display" class="plan-name"></span>
+    </div>
+
+    <!-- 
+        The 'required' attribute on each input enforces HTML5 form validation. 
+        If any field is empty, the browser will prevent submission to payment.html 
+        and display "Please fill out this field." 
+    -->
+    <form id="registration-form" action="payment.html" method="GET">
+        <div class="form-group">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input type="tel" id="phone-number" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a strong password" required>
+        </div>
+
+        <button type="submit" class="payment-button">Register and Proceed to Payment</button>
+    </form>
+</div>
+
+<div class="footer">
+    <!-- WhatsApp Icon SVG for the footer, matching the screenshot -->
+    <svg class="whatsapp-icon mx-auto" viewBox="0 0 24 24">
+        <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
+    </svg>
+    © 2025 FortuneX. All rights reserved.
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const planDisplay = document.getElementById('selected-plan-display');
+    const selectedPlan = localStorage.getItem('selectedPlan');
+    let displayText = "No plan selected. Please go back to Rewards.";
+    
+    // Set the display text based on the plan stored in localStorage
+    if (selectedPlan) {
+        displayText = selectedPlan;
+    }
+
+    planDisplay.textContent = displayText;
+
+    // Critical check: If no valid plan is selected, redirect to enforce selection.
+    // This prevents direct access to the registration page.
+    if (!selectedPlan || selectedPlan.includes('No plan')) {
+        // Redirection after a short delay
+        setTimeout(() => {
+            window.location.href = 'reward.html';
+        }, 100); 
+    }
+    
+    // Note: The form submission handles the redirection to payment.html 
+    // and the 'required' attribute handles the field validation.
+});
+</script>
+</body>
+</html>
+
+      
