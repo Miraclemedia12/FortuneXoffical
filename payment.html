@@ -51,7 +51,7 @@
             padding: 6px 10px;
             transition: all 0.3s;
         }
-        /* Highlight the active link */
+        /* Highlight the active link (Register is highlighted here, matching the previous file flow) */
         .navbar a[href="register.html"] {
             border-bottom: 3px solid gold;
         }
@@ -115,8 +115,10 @@
         .activity-feed-container {
             position: fixed; /* Fixes it on the screen */
             bottom: -100px; /* Start off-screen below */
-            left: 50%;
-            transform: translateX(-50%);
+            /* Center the element horizontally */
+            left: 0;
+            right: 0;
+            margin: 0 auto; 
             z-index: 900; 
             
             width: 90%;
@@ -224,6 +226,7 @@
     
     <div class="payment-for">
         You are paying for:
+        <!-- This will be populated by JavaScript -->
         <span id="plan-name-display" class="plan-name-display">...</span>
     </div>
 
@@ -263,6 +266,7 @@
 
         <div class="detail-row last-detail-row">
             <span class="detail-label">Amount:</span>
+            <!-- This will be populated by JavaScript -->
             <span id="amount-display" class="detail-value amount-display">₦0</span>
         </div>
         
@@ -278,7 +282,7 @@
 <div class="footer">
     <!-- WhatsApp Icon SVG -->
     <svg class="whatsapp-icon mx-auto" viewBox="0 0 24 24">
-        <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
+        <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c-.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
     </svg>
     © 2025 FortuneX. All rights reserved.
 </div>
@@ -315,7 +319,7 @@
 <script>
 // WhatsApp Contact Details
 const WA_NUMBER = "2347063780224"; 
-const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt .";
+const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt.";
 const REDIRECT_DELAY_MS = 6000; // 6 seconds
 
 // Activity Timing Configuration
@@ -356,21 +360,32 @@ function copyToClipboard(elementId, buttonElement) {
     document.body.removeChild(tempInput);
 }
 
-// Function to extract plan name and amount
+/**
+ * Parses the plan string stored in localStorage to extract the name and amount.
+ * Expected format: "Plan Name (₦Amount)"
+ * @param {string} planString 
+ * @returns {{name: string, amount: string}}
+ */
 function parsePlanString(planString) {
-    const match = planString.match(/(.*?)\s\(₦(.*)\)/);
-    if (match) {
-        return {
-            name: match[1].trim(), 
-            amount: '₦' + match[2].trim() 
-        };
+    // Default to the Starter Plan details if storage is empty or parsing fails
+    let name = "Starter Plan";
+    let amount = "₦7,500"; 
+    
+    if (planString) {
+        const match = planString.match(/(.*?)\s\(₦(.*)\)/);
+        if (match) {
+            name = match[1].trim(); 
+            // Ensures the amount is always prefixed with '₦' and correctly trimmed
+            amount = '₦' + match[2].trim(); 
+        }
     }
-    return { name: "Error: Plan Not Found", amount: "₦0" };
+
+    return { name, amount };
 }
 
 // Function to start the 1-hour countdown timer
 function startCountdown() {
-    let totalSeconds = 60 * 60; 
+    let totalSeconds = 60 * 60; // 1 hour
     const timerDisplay = document.getElementById('payment-timer');
     const confirmButton = document.getElementById('confirm-payment-trigger');
 
@@ -397,8 +412,9 @@ function startCountdown() {
         totalSeconds--;
     }
 
-    updateTimer();
+    // Set the interval and capture the interval ID
     const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer(); // Initial call to show the timer immediately
 }
 
 // Function to prepare and display the next activity
@@ -471,40 +487,22 @@ function startActivityCycle() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Fetch the user's selected plan data
     const selectedPlanString = localStorage.getItem('selectedPlan');
-    const planDetails = parsePlanString(selectedPlanString || "");
+    const planDetails = parsePlanString(selectedPlanString);
 
     const planNameDisplay = document.getElementById('plan-name-display');
     const amountDisplay = document.getElementById('amount-display');
     const confirmButton = document.getElementById('confirm-payment-trigger');
     const modal = document.getElementById('processing-modal');
 
-    // 1. Populate Dynamic Content
+    // 2. Populate Dynamic Content with the selected plan (or default)
     if (planNameDisplay && amountDisplay) {
         planNameDisplay.textContent = planDetails.name;
         amountDisplay.textContent = planDetails.amount;
-    } else {
-        // Default to Starter Plan if no plan is found (e.g., direct navigation)
-        planNameDisplay.textContent = "Starter Plan";
-        amountDisplay.textContent = "₦7,500";
     }
     
-    // 2. Start the 1-hour countdown timer
+    // 3. Start the 1-hour countdown timer
     startCountdown();
     
-    // 3. Start the activity feed cycle
-    startActivityCycle();
-    
-    // 4. Add Payment Confirmation Logic
-    if (confirmButton) {
-        confirmButton.addEventListener('click', () => {
-            if (confirmButton.disabled) {
-                console.warn("Payment button is disabled due to timer expiration.");
-                return; 
-            }
-            
-            modal.style.display = 'flex';
-            
-            // Construct the full WhatsApp message
-            const planToShare = planNameDisplay.textContent.split(' ')[0] + ' Plan';
-            const amountToShare = amountDispl
+    // 4. Start t
