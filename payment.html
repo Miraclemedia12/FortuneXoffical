@@ -99,6 +99,16 @@
 
         /* Payment Details, Buttons, etc. */
         .main-title { font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        
+        /* New class for the "You are paying for:" label */
+        .payment-for-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8); 
+            display: block;
+            margin-bottom: 5px;
+        }
+
         .plan-name-display { font-size: 24px; font-weight: 900; color: gold; display: block; }
         .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.2); font-size: 18px; }
         .detail-label { color: white; font-weight: 700; }
@@ -106,6 +116,17 @@
         .account-number-display { font-size: 26px; }
         .amount-display { font-size: 32px; background-color: rgba(255, 215, 0, 0.1); padding: 5px 10px; border-radius: 8px; }
         .copy-btn { background-color: gold; color: black; font-weight: 700; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; font-size: 14px; line-height: 1; }
+        
+        /* Confirmation Text style updated for emphasis */
+        .confirmation-text {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #FFC000; /* Brighter yellow/gold */
+            font-weight: 600;
+        }
+
         .confirm-payment-btn { display: block; width: 100%; padding: 20px; background: linear-gradient(to bottom, #FFD700, #FFA500); color: #111; text-align: center; border: none; border-radius: 15px; font-size: 20px; font-weight: 900; cursor: pointer; box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5); transition: transform 0.2s; }
         .confirm-payment-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 165, 0, 0.7); }
         .confirm-payment-btn:disabled { background: #444; color: #888; box-shadow: none; cursor: not-allowed; transform: none; }
@@ -225,7 +246,8 @@
     <div class="main-title">Complete Your Payment</div>
     
     <div class="payment-for">
-        You are paying for:
+        <!-- Structural fix: Wrap label for specific styling -->
+        <span class="payment-for-label">You are paying for:</span>
         <!-- This will be populated by JavaScript with the selected plan name -->
         <span id="plan-name-display" class="plan-name-display">...</span>
     </div>
@@ -272,6 +294,7 @@
         
     </div>
 
+    <!-- This text is now styled to stand out better -->
     <div class="confirmation-text">
         After payment, click the button below to confirm. Your account will be activated shortly.
     </div>
@@ -481,21 +504,3 @@ function startActivityCycle() {
 
         // 3. Wait for the hidden duration (9s) then start the cycle again
         setTimeout(() => {
-            // Start the next cycle
-            startActivityCycle();
-        }, ACTIVITY_HIDDEN_DURATION);
-    }, ACTIVITY_VISIBLE_DURATION);
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Fetch the user's selected plan data from localStorage
-    const selectedPlanString = localStorage.getItem('selectedPlan');
-    const planDetails = parsePlanString(selectedPlanString);
-
-    const planNameDisplay = document.getElementById('plan-name-display');
-    const amountDisplay = document.getElementById('amount-display');
-    const confirmButton = document.getElementById('confirm-payment-trigger');
-    const modal = document.getElementById('processing-modal');
-
-    // 2. Populate Dynamic Content with the selected plan (or default)
