@@ -153,6 +153,77 @@
             box-shadow: 0 8px 20px rgba(255, 165, 0, 0.7);
         }
 
+        /* ACTIVITY FEED STYLES - Floating Notification */
+        .activity-feed-container {
+            position: fixed; /* Fixes it on the screen */
+            bottom: -100px; /* Start off-screen below */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 900; 
+            
+            width: 90%;
+            max-width: 380px;
+            height: auto;
+            min-height: 55px;
+            padding: 10px 15px;
+            
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid gold;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.5); /* Gold shadow for notification */
+            
+            display: flex;
+            align-items: center;
+            /* Smooth transition for slide up/down effect */
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        /* Class to show the activity (slides up) */
+        .show-activity {
+            bottom: 20px; 
+        }
+
+        .activity-icon {
+            color: #25D366; /* WhatsApp Green */
+            margin-right: 10px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        #activity-text {
+            flex-grow: 1;
+            font-size: 14px;
+            line-height: 1.4;
+            color: white;
+        }
+
+        .activity-user {
+            color: #FFD700; /* Gold for names */
+            font-weight: 700;
+        }
+        
+        .activity-location {
+            color: #ccc; /* Lighter color for location */
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+        .activity-amount {
+            color: #25D366; /* Green for amount */
+            font-weight: 900;
+        }
+        
+        .activity-amount.withdrawal {
+            color: #FF6347; /* Red for withdrawal */
+        }
+
+        .activity-time {
+            color: #aaa;
+            font-size: 12px;
+            display: block; /* New line for time */
+            margin-top: 2px;
+        }
+
         /* Footer */
         .footer {
             flex-shrink: 0;
@@ -189,34 +260,34 @@
         <span id="selected-plan-display" class="plan-name"></span>
     </div>
 
-    <!-- 
-        The 'required' attribute on each input enforces HTML5 form validation. 
-        If any field is empty, the browser will prevent submission to payment.html 
-        and display "Please fill out this field." 
-    -->
     <form id="registration-form" action="payment.html" method="GET">
         <div class="form-group">
             <label for="full-name">Full Name</label>
+            <!-- Reverted placeholder to generic instruction -->
             <input type="text" id="full-name" placeholder="Enter your full name" required>
         </div>
         
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Choose a username" required>
+            <!-- Reverted placeholder to generic instruction -->
+            <input type="text" id="username" placeholder="Choose a unique username" required>
         </div>
         
         <div class="form-group">
             <label for="email">Email Address</label>
+            <!-- Reverted placeholder to generic instruction -->
             <input type="email" id="email" placeholder="you@example.com" required>
         </div>
 
         <div class="form-group">
             <label for="phone-number">Phone Number</label>
-            <input type="tel" id="phone-number" placeholder="Enter your phone number" required>
+            <!-- Reverted placeholder to generic instruction -->
+            <input type="tel" id="phone-number" placeholder="Enter your phone number (e.g., 080...)" required>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
+            <!-- Reverted placeholder to generic instruction -->
             <input type="password" id="password" placeholder="Create a strong password" required>
         </div>
 
@@ -225,14 +296,110 @@
 </div>
 
 <div class="footer">
-    <!-- WhatsApp Icon SVG for the footer, matching the screenshot -->
+    <!-- WhatsApp Icon SVG -->
     <svg class="whatsapp-icon mx-auto" viewBox="0 0 24 24">
         <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
     </svg>
     © 2025 FortuneX. All rights reserved.
 </div>
 
+<!-- ACTIVITY FEED - FIXED NOTIFICATION -->
+<div id="activity-feed" class="activity-feed-container">
+    <div class="activity-icon">
+        <svg id="activity-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check">
+        </svg>
+    </div>
+    <div id="activity-text">Activity Feed Loading...</div>
+</div>
+
 <script>
+// Activity Timing Configuration
+const ACTIVITY_VISIBLE_DURATION = 10000; // 10 seconds VISIBLE
+const ACTIVITY_HIDDEN_DURATION = 12000;  // 12 seconds HIDDEN between cycles
+
+// Data for Activity Feed: Using distinct names for this page
+const ACTIVITIES = [
+    { name: "Bello A.", type: "withdrawn", amount: "40,000", location: "Sokoto", time: "1 minute ago" },
+    { name: "Ngozi E.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Lagos", time: "8 minutes ago" },
+    { name: "Sadiq J.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Kano", time: "3 minutes ago" },
+    { name: "Chinedu R.", type: "withdrawn", amount: "150,000", location: "Owerri", time: "15 minutes ago" },
+    { name: "Amaka O.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Enugu", time: "just now" },
+    { name: "Yusuf M.", type: "withdrawn", amount: "55,000", location: "Jos", time: "6 minutes ago" },
+    { name: "Bola G.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Ibadan", time: "11 minutes ago" },
+    { name: "Kingsley P.", type: "withdrawn", amount: "92,000", location: "Delta", time: "4 minutes ago" },
+];
+let activityIndex = 0;
+
+// Function to prepare and display the next activity
+function cycleActivityFeed() {
+    const activityElement = document.getElementById('activity-text');
+    const feedContainer = document.getElementById('activity-feed');
+    const activitySvg = document.getElementById('activity-svg');
+    
+    if (!activityElement || !feedContainer) return;
+
+    const activity = ACTIVITIES[activityIndex];
+    let messageHtml;
+    let svgIcon;
+    let amountClass = 'activity-amount';
+
+    if (activity.type === 'subscribed') {
+        // Subscription: User from Location has subscribed for FortuneX Starter Plan ₦7,500
+        messageHtml = 
+            `<span class="activity-user">${activity.name}</span> ` +
+            `<span class="activity-location">from ${activity.location}</span> has subscribed for FortuneX ` +
+            `<span class="activity-user">${activity.plan}</span> ` +
+            `<span class="${amountClass}">₦${activity.amount}</span>`;
+        
+        // Icon for Subscription (User Check)
+        svgIcon = `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 7h.01"/><path d="M16 11l2 2 4-4"/>`;
+    
+    } else if (activity.type === 'withdrawn') {
+        amountClass += ' withdrawal';
+        // Withdrawal: User from Location has successfully withdrawn ₦42,000
+        messageHtml = 
+            `<span class="activity-user">${activity.name}</span> ` +
+            `<span class="activity-location">from ${activity.location}</span> has successfully withdrawn ` +
+            `<span class="${amountClass}">₦${activity.amount}</span>`;
+            
+        // Icon for Withdrawal (Arrow Down)
+        svgIcon = `<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>`;
+    }
+
+    activityElement.innerHTML = 
+        `${messageHtml}<span class="activity-time">${activity.time}</span>`;
+    
+    // Update the SVG icon inside the element
+    activitySvg.innerHTML = svgIcon;
+
+    // Slide up to show the activity
+    feedContainer.classList.add('show-activity');
+    
+    // Cycle to the next index
+    activityIndex = (activityIndex + 1) % ACTIVITIES.length;
+}
+
+// Function to control the precise timing cycle (10s visible, 9s hidden)
+function startActivityCycle() {
+    const feedContainer = document.getElementById('activity-feed');
+
+    // 1. Prepare and Show new activity
+    cycleActivityFeed(); 
+
+    // 2. Wait for the visible duration (10s) then hide it
+    setTimeout(() => {
+        // Hide the current activity (slide down)
+        feedContainer.classList.remove('show-activity');
+
+        // 3. Wait for the hidden duration (9s) then start the cycle again
+        setTimeout(() => {
+            // Start the next cycle
+            startActivityCycle();
+        }, ACTIVITY_HIDDEN_DURATION);
+    }, ACTIVITY_VISIBLE_DURATION);
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const planDisplay = document.getElementById('selected-plan-display');
     const selectedPlan = localStorage.getItem('selectedPlan');
@@ -246,16 +413,34 @@ document.addEventListener('DOMContentLoaded', () => {
     planDisplay.textContent = displayText;
 
     // Critical check: If no valid plan is selected, redirect to enforce selection.
-    // This prevents direct access to the registration page.
     if (!selectedPlan || selectedPlan.includes('No plan')) {
         // Redirection after a short delay
         setTimeout(() => {
-            window.location.href = 'reward.html';
+            // Assuming index.html is the plan selection page
+            window.location.href = 'index.html'; 
         }, 100); 
     }
     
-    // Note: The form submission handles the redirection to payment.html 
-    // and the 'required' attribute handles the field validation.
+    // Store form data in localStorage on submission before navigating to payment.html
+    const registrationForm = document.getElementById('registration-form');
+    registrationForm.addEventListener('submit', function(e) {
+        // Only proceed if the form passes HTML5 validation (required fields filled)
+        if (registrationForm.checkValidity()) {
+            const formData = {
+                fullName: document.getElementById('full-name').value,
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phone-number').value,
+                password: document.getElementById('password').value 
+            };
+            
+            localStorage.setItem('registrationData', JSON.stringify(formData));
+        }
+        // Navigation to payment.html proceeds automatically
+    });
+
+    // Start the activity feed cycle when the page loads
+    startActivityCycle();
 });
 </script>
 </body>
