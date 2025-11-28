@@ -118,7 +118,7 @@
             /* Center the element horizontally */
             left: 0;
             right: 0;
-            margin: 0 auto; 
+            margin: 0 auto; /* THIS CENTERS THE FIXED ELEMENT */
             z-index: 900; 
             
             width: 90%;
@@ -226,7 +226,7 @@
     
     <div class="payment-for">
         You are paying for:
-        <!-- This will be populated by JavaScript -->
+        <!-- This will be populated by JavaScript with the selected plan name -->
         <span id="plan-name-display" class="plan-name-display">...</span>
     </div>
 
@@ -266,7 +266,7 @@
 
         <div class="detail-row last-detail-row">
             <span class="detail-label">Amount:</span>
-            <!-- This will be populated by JavaScript -->
+            <!-- This will be populated by JavaScript with the selected plan amount -->
             <span id="amount-display" class="detail-value amount-display">₦0</span>
         </div>
         
@@ -287,7 +287,7 @@
     © 2025 FortuneX. All rights reserved.
 </div>
 
-<!-- ACTIVITY FEED - FIXED NOTIFICATION -->
+<!-- ACTIVITY FEED - FIXED NOTIFICATION (Now centered) -->
 <div id="activity-feed" class="activity-feed-container">
     <div class="activity-icon">
         <svg id="activity-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check">
@@ -367,11 +367,13 @@ function copyToClipboard(elementId, buttonElement) {
  * @returns {{name: string, amount: string}}
  */
 function parsePlanString(planString) {
-    // Default to the Starter Plan details if storage is empty or parsing fails
+    // Default to a sensible plan if storage is empty or parsing fails
     let name = "Starter Plan";
     let amount = "₦7,500"; 
     
     if (planString) {
+        // Regex to capture everything before the first '(' as the name, and everything 
+        // after '₦' inside '()' as the amount.
         const match = planString.match(/(.*?)\s\(₦(.*)\)/);
         if (match) {
             name = match[1].trim(); 
@@ -487,7 +489,7 @@ function startActivityCycle() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Fetch the user's selected plan data
+    // 1. Fetch the user's selected plan data from localStorage
     const selectedPlanString = localStorage.getItem('selectedPlan');
     const planDetails = parsePlanString(selectedPlanString);
 
@@ -497,12 +499,3 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('processing-modal');
 
     // 2. Populate Dynamic Content with the selected plan (or default)
-    if (planNameDisplay && amountDisplay) {
-        planNameDisplay.textContent = planDetails.name;
-        amountDisplay.textContent = planDetails.amount;
-    }
-    
-    // 3. Start the 1-hour countdown timer
-    startCountdown();
-    
-    // 4. Start t
