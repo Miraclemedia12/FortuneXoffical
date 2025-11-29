@@ -3,504 +3,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Payment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Complete Payment</title>
+    <!-- Keep Tailwind for utility classes used in the HTML structure -->
+    <script src="https://cdn.tailwindcss.com"></script> 
+    
     <style>
-        /* Base Colors & Layout */
+        /* --- ROBUST PURE CSS STYLES --- */
+        
+        /* 1. Base Colors & Layout */
         body {
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            /* Radial gradient background matching the screenshots */
-            background: radial-gradient(circle at center, #800000 0%, #300000 70%, #000000 100%);
-            font-family: 'Inter', sans-serif;
-            color: white;
+            background-color: #000000;
+            background-image: linear-gradient(180deg, #300000 0%, #100000 100%);
+            color: #FFFFFF;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
 
-        /* LOGO & NAV */
-        .logo-container {
+        /* 2. Main Card/Container */
+        .content-card {
             width: 100%;
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        .logo {
-            font-size: 35px;
-            font-weight: 900;
-            color: gold;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-            width: 100%;
-        }
-
-        .navbar a {
-            color: gold;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            padding: 6px 10px;
-            transition: all 0.3s;
-        }
-        /* Highlight the active link (Register is highlighted here, matching the previous file flow) */
-        .navbar a[href="register.html"] {
-            border-bottom: 3px solid gold;
-        }
-
-        .navbar a:hover { 
-            color: #ffcc00; 
-        }
-
-        /* Main Payment Card/Container */
-        .payment-container {
-            width: 95%;
             max-width: 450px;
-            margin: 20px auto 10px; 
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            flex-grow: 1;
+            margin-top: 10px;
+            background: rgba(40, 0, 0, 0.9);
+            border: 1px solid #FFD700;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
         }
 
-        /* Timer Box */
-        .warning-box {
-            background-color: #8b0000; 
-            border: 1px solid red;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 30px;
-            font-size: 15px;
-            color: white;
-            font-weight: 500;
-        }
-        
-        #payment-timer {
+        /* 3. Header & Text Emphasis */
+        .main-title {
+            font-size: 24px;
+            font-weight: 800;
             text-align: center;
-            font-weight: 700;
-            font-size: 20px;
-            color: yellow; 
-        }
-        
-        .expired {
-            color: white !important;
-            font-size: 16px !important;
-            font-weight: 500 !important;
-        }
-
-        /* Payment Details, Buttons, etc. */
-        .main-title { font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 15px; }
-        
-        /* New class for the "You are paying for:" label */
-        .payment-for-label {
-            font-size: 16px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8); 
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .plan-name-display { font-size: 24px; font-weight: 900; color: gold; display: block; }
-        .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.2); font-size: 18px; }
-        .detail-label { color: white; font-weight: 700; }
-        .detail-value { color: gold; font-weight: 900; text-align: right; }
-        .account-number-display { font-size: 26px; }
-        .amount-display { font-size: 32px; background-color: rgba(255, 215, 0, 0.1); padding: 5px 10px; border-radius: 8px; }
-        .copy-btn { background-color: gold; color: black; font-weight: 700; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; font-size: 14px; line-height: 1; }
-        
-        /* Confirmation Text style updated for emphasis */
-        .confirmation-text {
-            text-align: center;
-            margin-top: 30px;
+            color: #FFD700;
             margin-bottom: 20px;
-            font-size: 16px;
-            color: #FFC000; /* Brighter yellow/gold */
-            font-weight: 600;
         }
 
-        .confirm-payment-btn { display: block; width: 100%; padding: 20px; background: linear-gradient(to bottom, #FFD700, #FFA500); color: #111; text-align: center; border: none; border-radius: 15px; font-size: 20px; font-weight: 900; cursor: pointer; box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5); transition: transform 0.2s; }
-        .confirm-payment-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 165, 0, 0.7); }
-        .confirm-payment-btn:disabled { background: #444; color: #888; box-shadow: none; cursor: not-allowed; transform: none; }
+        .plan-name-display {
+            font-size: 28px;
+            font-weight: 900;
+            color: #FFD700; 
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-
-        /* ACTIVITY FEED STYLES - Floating Notification */
-        .activity-feed-container {
-            position: fixed; /* Fixes it on the screen */
-            bottom: -100px; /* Start off-screen below */
-            /* Center the element horizontally */
-            left: 0;
-            right: 0;
-            margin: 0 auto; /* THIS CENTERS THE FIXED ELEMENT */
-            z-index: 900; 
-            
-            width: 90%;
-            max-width: 380px;
-            height: auto;
-            min-height: 55px;
-            padding: 10px 15px;
-            
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid gold;
+        /* 4. Timer Box */
+        .processing-box {
+            background-color: #8B0000;
+            padding: 15px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.5); /* Gold shadow for notification */
-            
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFF00;
+            margin-bottom: 25px;
+        }
+
+        /* 5. Detail Rows (Bank/Account) */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #D3D3D3;
+        }
+        .detail-value-group {
             display: flex;
             align-items: center;
-            /* Smooth transition for slide up/down effect */
-            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            gap: 10px;
         }
-
-        /* Class to show the activity (slides up) */
-        .show-activity {
-            bottom: 20px; 
-        }
-
-        .activity-icon {
-            color: #25D366; /* WhatsApp Green */
-            margin-right: 10px;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        #activity-text {
-            flex-grow: 1;
-            font-size: 14px;
-            line-height: 1.4;
-            color: white;
-        }
-
-        .activity-user {
-            color: #FFD700; /* Gold for names */
+        .detail-value {
             font-weight: 700;
+            color: #FFD700;
+            font-size: 16px;
         }
-        
-        .activity-location {
-            color: #ccc; /* Lighter color for location */
-            font-weight: 500;
-            margin-left: 5px;
-        }
-
-        .activity-amount {
-            color: #25D366; /* Green for amount */
+        .account-number-display {
+            font-size: 22px;
             font-weight: 900;
         }
-        
-        .activity-amount.withdrawal {
-            color: #FF6347; /* Red for withdrawal */
+
+        /* 6. Amount Row (Highlight) */
+        #payment-amount-container {
+            padding: 15px;
+            background-color: #600000;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        #payment-amount-display {
+            font-size: 36px;
+            font-weight: 900;
+            color: #FFFF00;
         }
 
-        .activity-time {
-            color: #aaa;
+        /* 7. Copy Button - Simple */
+        .copy-button {
+            background-color: #FFD700;
+            color: #000000;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
             font-size: 12px;
-            display: block; /* New line for time */
-            margin-top: 2px;
+            font-weight: 700;
+            transition: background-color 0.1s;
+        }
+        .copy-button:hover { background-color: #FFC400; }
+        
+        /* 8. Confirmation Button */
+        .confirm-button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            background-image: linear-gradient(to right, #FFD700, #FFA500);
+            color: #000000;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.6);
+            transition: transform 0.2s;
+        }
+        .confirm-button:active {
+            transform: translateY(1px);
         }
 
-        /* Footer */
-        .footer {
-            flex-shrink: 0;
-            width: 100%;
+        /* 9. Footer Text */
+        .footer-text {
             text-align: center;
-            padding: 20px 0;
+            font-size: 12px;
+            color: #A0A0A0;
+            margin-top: 30px;
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #1a0000; /* Very dark red */
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+            border: 2px solid #FFD700;
+            text-align: center;
+        }
+        .modal-plan-summary {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFC0CB; /* Pink/Red for contrast */
+            margin: 15px 0;
+        }
+        .modal-final-button {
+            background-color: #25D366; /* WhatsApp Green */
             color: white;
-            font-size: 14px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.1s;
+        }
+        .modal-final-button:hover { background-color: #1FAF59; }
+
+        .hidden {
+            display: none !important;
         }
         
-        .whatsapp-icon {
-            width: 30px;
-            height: 30px;
-            fill: #25D366;
-            margin-bottom: 5px;
-        }
-        
-        /* Modal Styles */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background-color: rgba(0, 0, 0, 0.8); border: 2px solid gold; border-radius: 20px; padding: 40px 30px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9); animation: fadeInScale 0.3s ease-out; }
-        .modal-icon { color: #25D366; font-size: 50px; line-height: 1; margin-bottom: 15px; }
-        .modal-title { color: #25D366; font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-        .modal-message { color: white; font-size: 16px; line-height: 1.5; }
-        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="logo-container">
-    <div class="logo">FortuneX</div>
-</div>
-<div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="reward.html">Rewards</a>
-    <a href="register.html">Register</a>
-</div>
+    <div class="content-card">
 
-<div class="payment-container">
-    <div class="main-title">Complete Your Payment</div>
-    
-    <div class="payment-for">
-        <!-- Structural fix: Wrap label for specific styling -->
-        <span class="payment-for-label">You are paying for:</span>
-        <!-- This will be populated by JavaScript with the selected plan name -->
-        <span id="plan-name-display" class="plan-name-display">...</span>
-    </div>
+        <h1 class="main-title">Complete Your Payment</h1>
 
-    <!-- WARNING BOX: Now displays the 1-hour countdown timer -->
-    <div class="warning-box">
-        <div id="payment-timer" class="text-center font-bold text-xl">
-            Processing payment 01:00:00
+        <!-- Plan Display (This is where the correct plan will appear) -->
+        <div style="text-align: center; color: #D3D3D3; font-size: 14px;">
+            You are paying for:
         </div>
-    </div>
+        <div id="plan-name-display" class="plan-name-display">...</div>
 
-    <!-- Account Details -->
-    <div class="account-details">
-        
-        <div class="detail-row">
-            <span class="detail-label">Bank Name:</span>
-            <div class="detail-value">
-                <span id="bank-name">Paystack-Titan</span>
-                <button class="copy-btn" onclick="copyToClipboard('bank-name', this)">Copy</button>
+
+        <!-- Processing Timer -->
+        <div class="processing-box">
+            Processing payment <span id="payment-timer">01:00:00</span>
+        </div>
+
+        <!-- Payment Details Grid -->
+        <div class="space-y-4">
+            <!-- Bank Name -->
+            <div class="detail-row">
+                <span class="detail-label">Bank Name:</span>
+                <div class="detail-value-group">
+                    <span id="bank-name-text" class="detail-value">Paystack-Titan</span>
+                    <button id="copy-bank" class="copy-button" onclick="copyText('bank-name-text', this)">Copy</button>
+                </div>
             </div>
-        </div>
-        
-        <div class="detail-row">
-            <span class="detail-label">Account Name:</span>
-            <div class="detail-value">
-                <span id="account-name">Chipper cash/Okon Miracle</span>
-                <button class="copy-btn" onclick="copyToClipboard('account-name', this)">Copy</button>
+
+            <!-- Account Name -->
+            <div class="detail-row">
+                <span class="detail-label">Account Name:</span>
+                <div class="detail-value-group">
+                    <span id="account-name-text" class="detail-value">Chipper cash/Okon Miracle</span>
+                    <button id="copy-account-name" class="copy-button" onclick="copyText('account-name-text', this)">Copy</button>
+                </div>
             </div>
-        </div>
-        
-        <div class="detail-row">
-            <span class="detail-label">Account Number:</span>
-            <div class="detail-value">
-                <span id="account-number" class="account-number-display">9998411556</span>
-                <button class="copy-btn" onclick="copyToClipboard('account-number', this)">Copy</button>
+
+            <!-- Account Number -->
+            <div class="detail-row">
+                <span class="detail-label">Account Number:</span>
+                <div class="detail-value-group">
+                    <span id="account-number-text" class="account-number-display" style="color: #FFC0CB;">9998411556</span>
+                    <button id="copy-account-number" class="copy-button" onclick="copyText('account-number-text', this)">Copy</button>
+                </div>
             </div>
-        </div>
-
-        <div class="detail-row last-detail-row">
-            <span class="detail-label">Amount:</span>
-            <!-- This will be populated by JavaScript with the selected plan amount -->
-            <span id="amount-display" class="detail-value amount-display">₦0</span>
-        </div>
-        
-    </div>
-
-    <!-- This text is now styled to stand out better -->
-    <div class="confirmation-text">
-        After payment, click the button below to confirm. Your account will be activated shortly.
-    </div>
-    
-    <button id="confirm-payment-trigger" class="confirm-payment-btn">I Have Made Payment</button>
-</div>
-
-<div class="footer">
-    <!-- WhatsApp Icon SVG -->
-    <svg class="whatsapp-icon mx-auto" viewBox="0 0 24 24">
-        <path d="M12.031 3.225c-4.437 0-8.031 3.594-8.031 8.031 0 1.484.416 2.924 1.164 4.195l-1.222 4.475 4.562-1.196c1.235.698 2.65 1.057 4.527 1.057 4.437 0 8.031-3.594 8.031-8.031s-3.594-8.031-8.031-8.031zm3.875 11.219l-.547 1.344c-.201.493-.728.694-1.218.495l-1.906-.797c-.207-.087-.432-.132-.656-.132-.128 0-.256.012-.38.037l-1.047.281c-.551.146-1.115-.17-1.261-.722l-.547-2.031c-.048-.176-.025-.362.062-.519l.718-1.218c.088-.148.219-.247.375-.297l1.047-.281c-.224-.06.45-.078.682-.054l1.906.797c.49.201.691.728.493 1.218l-.547 1.344z" fill-rule="evenodd"/>
-    </svg>
-    © 2025 FortuneX. All rights reserved.
-</div>
-
-<!-- ACTIVITY FEED - FIXED NOTIFICATION (Now centered) -->
-<div id="activity-feed" class="activity-feed-container">
-    <div class="activity-icon">
-        <svg id="activity-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check">
-        </svg>
-    </div>
-    <div id="activity-text">Activity Feed Loading...</div>
-</div>
-
-
-<!-- Payment Processing Modal -->
-<div id="processing-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-icon mx-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <path d="m9 11 3 3L22 4"/>
-            </svg>
-        </div>
-
-        <div class="modal-title">Payment Processing!!</div>
-        <div class="modal-message">
-            Thank you for joining FortuneX. Your payment is being verified.
-            <br><br>
-            You will be redirected to WhatsApp to share your receipt.
-        </div>
-    </div>
-</div>
-
-<script>
-// WhatsApp Contact Details
-const WA_NUMBER = "2347063780224"; 
-const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt.";
-const REDIRECT_DELAY_MS = 6000; // 6 seconds
-
-// Activity Timing Configuration
-const ACTIVITY_VISIBLE_DURATION = 10000; // 10 seconds VISIBLE
-const ACTIVITY_HIDDEN_DURATION = 9000;  // 9 seconds HIDDEN between cycles
-
-// Data for Activity Feed: Name, Action Type, Amount, Location, and Time Ago
-const ACTIVITIES = [
-    { name: "Emeka O.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Lagos", time: "just now" },
-    { name: "Ruth T.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Calabar", time: "2 minutes ago" },
-    { name: "Miracle P.", type: "withdrawn", amount: "42,000", location: "Port Harcourt", time: "1 minute ago" },
-    { name: "Kunle B.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Ibadan", time: "15 minutes ago" },
-    { name: "Hadiza C.", type: "withdrawn", amount: "50,000", location: "Kano", time: "3 minutes ago" },
-    { name: "Precious N.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Enugu", time: "12 minutes ago" },
-    { name: "Ifeanyi R.", type: "withdrawn", amount: "30,000", location: "Lagos", time: "8 minutes ago" },
-    { name: "Ngozi M.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Abuja", time: "10 minutes ago" },
-    { name: "Samuel E.", type: "withdrawn", amount: "75,000", location: "Port Harcourt", time: "4 minutes ago" },
-];
-let activityIndex = 0;
-
-// Function to handle copying text to the clipboard
-function copyToClipboard(elementId, buttonElement) {
-    const copyText = document.getElementById(elementId).textContent.trim();
-    const tempInput = document.createElement('textarea');
-    tempInput.value = copyText;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999); 
-    try {
-        document.execCommand('copy');
-        buttonElement.textContent = 'Copied!';
-        setTimeout(() => { buttonElement.textContent = 'Copy'; }, 1500);
-    } catch (err) {
-        console.error('Failed to copy text: ', err);
-        buttonElement.textContent = 'Error!';
-        setTimeout(() => { buttonElement.textContent = 'Copy'; }, 1500);
-    }
-    document.body.removeChild(tempInput);
-}
-
-/**
- * Parses the plan string stored in localStorage to extract the name and amount.
- * Expected format: "Plan Name (₦Amount)"
- * @param {string} planString 
- * @returns {{name: string, amount: string}}
- */
-function parsePlanString(planString) {
-    // Default to a sensible plan if storage is empty or parsing fails
-    let name = "Starter Plan";
-    let amount = "₦7,500"; 
-    
-    if (planString) {
-        // Regex to capture everything before the first '(' as the name, and everything 
-        // after '₦' inside '()' as the amount.
-        const match = planString.match(/(.*?)\s\(₦(.*)\)/);
-        if (match) {
-            name = match[1].trim(); 
-            // Ensures the amount is always prefixed with '₦' and correctly trimmed
-            amount = '₦' + match[2].trim(); 
-        }
-    }
-
-    return { name, amount };
-}
-
-// Function to start the 1-hour countdown timer
-function startCountdown() {
-    let totalSeconds = 60 * 60; // 1 hour
-    const timerDisplay = document.getElementById('payment-timer');
-    const confirmButton = document.getElementById('confirm-payment-trigger');
-
-    function updateTimer() {
-        if (!timerDisplay) { clearInterval(timerInterval); return; }
-        
-        if (totalSeconds <= 0) {
-            timerDisplay.textContent = "Payment window expired. Please refresh the page.";
-            timerDisplay.classList.add('expired');
-            if (confirmButton) { confirmButton.disabled = true; }
-            clearInterval(timerInterval);
-            return;
-        }
-
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        const displayHours = String(hours).padStart(2, '0');
-        const displayMinutes = String(minutes).padStart(2, '0');
-        const displaySeconds = String(seconds).padStart(2, '0');
-
-        timerDisplay.textContent = `Processing payment ${displayHours}:${displayMinutes}:${displaySeconds}`;
-        totalSeconds--;
-    }
-
-    // Set the interval and capture the interval ID
-    const timerInterval = setInterval(updateTimer, 1000);
-    updateTimer(); // Initial call to show the timer immediately
-}
-
-// Function to prepare and display the next activity
-function cycleActivityFeed() {
-    const activityElement = document.getElementById('activity-text');
-    const feedContainer = document.getElementById('activity-feed');
-    const activitySvg = document.getElementById('activity-svg');
-    
-    if (!activityElement || !feedContainer) return;
-
-    const activity = ACTIVITIES[activityIndex];
-    let messageHtml;
-    let svgIcon;
-    let amountClass = 'activity-amount';
-
-    if (activity.type === 'subscribed') {
-        // Subscription: User from Location has subscribed for FortuneX Starter Plan ₦7,500
-        messageHtml = 
-            `<span class="activity-user">${activity.name}</span> ` +
-            `<span class="activity-location">from ${activity.location}</span> has subscribed for FortuneX ` +
-            `<span class="activity-user">${activity.plan}</span> ` +
-            `<span class="${amountClass}">₦${activity.amount}</span>`;
-        
-        // Icon for Subscription (User Check)
-        svgIcon = `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 7h.01"/><path d="M16 11l2 2 4-4"/>`;
-    
-    } else if (activity.type === 'withdrawn') {
-        amountClass += ' withdrawal';
-        // Withdrawal: User from Location has successfully withdrawn ₦42,000
-        messageHtml = 
-            `<span class="activity-user">${activity.name}</span> ` +
-            `<span class="activity-location">from ${activity.location}</span> has successfully withdrawn ` +
-            `<span class="${amountClass}">₦${activity.amount}</span>`;
             
-        // Icon for Withdrawal (Arrow Down)
-        svgIcon = `<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>`;
-    }
+            <!-- Amount (This is where the correct price will appear) -->
+            <div id="payment-amount-container" class="detail-row" style="border-bottom: none;">
+                <span class="detail-label" style="font-size: 18px; font-weight: 700; color: #FFD700;">Amount:</span>
+                <span id="payment-amount-display">₦0</span>
+            </div>
+        </div>
 
-    activityElement.innerHTML = 
-        `${messageHtml}<span class="activity-time">${activity.time}</span>`;
-    
-    activitySvg.innerHTML = svgIcon;
+        <!-- Confirmation Action -->
+        <p style="text-align: center; font-size: 14px; color: #FFC0CB; margin-top: 20px;">
+            After payment, click the button below to confirm. Your account will be activated shortly.
+        </p>
+        
+        <button id="confirm-payment-btn" class="confirm-button">
+            I Have Made Payment
+        </button>
+    </div>
 
-    // Slide up to show the activity
-    feedContainer.classList.add('show-activity');
-    
-    // Cycle to the next index
-    activityIndex = (activityIndex + 1) % ACTIVITIES.length;
-}
+    <div class="footer-text">
+        &copy; 2025 FortuneX. All rights reserved.
+    </div>
 
-// Function to control the precise timing cycle (10s visible, 9s hidden)
-function startActivityCycle() {
-    const feedContainer = document.getElementById('activity-feed');
+    <!-- Confirmation Modal Structure -->
+    <div id="payment-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-3xl font-bold text-yellow-400 mb-4">Payment Confirmed!</h3>
+            <p class="text-white mb-2">Thank you for your payment!</p>
+            <p class="modal-plan-summary">
+                Plan: <span id="modal-plan-name">...</span> | Amount: <span id="modal-plan-amount">...</span>
+            </p>
+            <p class="text-sm text-red-300">
+                You will now be redirected to WhatsApp to submit your payment receipt.
+            </p>
+            <button id="modal-redirect-btn" class="modal-final-button">
+                Send Receipt via WhatsApp
+            </button>
+            <button onclick="closeModal()" class="text-sm text-gray-400 mt-4 underline">
+                Cancel / Wait
+            </button>
+        </div>
+    </div>
 
-    // 1. Prepare and Show new activity
-    cycleActivityFeed(); 
+    <script>
+        // WhatsApp Contact Details
+        const WA_NUMBER = "2347063780224";
+        const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt.";
+        
+        let currentPlan = { name: "N/A", amount: 0 };
 
-    // 2. Wait for the visible duration (10s) then hide it
-    setTimeout(() => {
-        // Hide the current activity (slide down)
-        feedContainer.classList.remove('show-activity');
 
-        // 3. Wait for the hidden duration (9s) then start the cycle again
-        setTimeout(() => {
+        /**
+         * Safely retrieves and parses the plan string from localStorage.
+         * Expected format: "Plan Name (₦Amount)" e.g., "FortuneX Plus (₦14,500)"
+         */
+        function parsePlanFromLocalStorage() {
+            const planString = localStorage.getItem('selectedPlan'); 
+            
+            if (planString) {
+                // Regex to extract plan name and amount (handles commas)
+                const match = planString.match(/(.+) \(₦([\d,]+)\)/);
+                if (match && match.length === 3) {
+                    try {
+                        const amountStr = match[2].replace(/,/g, ''); 
+                        return {
+                            name: match[1].trim(),
+                            amount: parseInt(amountStr, 10)
+                        };
+                    } catch (e) {
+                        console.error("Failed to parse plan amount:", e);
+                    }
+                }
+            }
+            
+            // FALLBACK: If the data is missing from the previous page, use the Starter Plan as a default amount.
+            console.warn("selectedPlan data missing from localStorage. Using Starter Plan fallback (₦7,500).");
+            return { name: "Starter Plan (Data Missing)", amount: 7500 }; 
+        }
+
+        /**
+         * Updates the HTML elements with the plan details.
+         */
+        function updatePaymentUI() {
+            const plan = parsePlanFromLocalStorage();
+            currentPlan = plan; 
+            
+            const displayAmount = `₦${plan.amount.toLocaleString()}`;
+
+            document.getElementById('plan-name-display').textContent = plan.name;
+            document.getElementById('payment-amount-display').textContent = displayAmount;
+
+            // Update modal fields
+            document.getElementById('modal-plan-name').textContent = plan.name;
+            document.getElementById('modal-plan-amount').textContent = displayAmount;
+
+            if (plan.amount === 0) {
+                document.getElementById('plan-name-display').textContent = "ERROR: Price Not Loaded";
+                document.getElementById('plan-name-display').style.color = 'red';
+            }
+        }
+
+        /**
+         * Copies the text content of a given element to the clipboard.
+         */
+        function copyText(elementId, buttonElement) {
+            const textContent = document.getElementById(elementId).textContent;
+            
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textContent;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                buttonElement.textContent = 'Copied!';
+                setTimeout(() => { 
+                    buttonElement.textContent = 'Copy'; 
+                }, 1000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                buttonElement.textContent = 'Error!';
+                setTimeout(() => { 
+                    buttonElement.textContent = 'Copy'; 
+                }, 1000);
+            }
+            
+            document.body.removeChild(tempInput);
+        }
+        
+        /**
+         * Starts the 1-hour countdown timer.
+         */
+        function startTimer() {
+            const timerElement = document.getElementById('payment-timer');
+            let timeLeft = 60 * 60; // 1 hour
+
+            function formatTime(seconds) {
+                const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
+                return `${h}:${m}:${s}`;
+            }
+
+            const timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = "EXPIRED";
+                    return;
+                }
+                timeLeft--;
+                timerElement.textContent = formatTime(timeLeft);
+            }, 1000);
+        }
+
+        /* --- MODAL FUNCTIONS --- */
+
+        /**
+         * @function showPaymentModal
+         * @description Shows the payment confirmation modal.
+         */
+        function showPaymentModal() {
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+        
+        /**
+         * @function closeModal
+         * @description Hides the payment confirmation modal.
+         */
+        function closeModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        /**
+         * @function redirectToWhatsApp
+         * @description Redirects the user to WhatsApp with the pre-filled message.
+         */
+        function redirectToWhatsApp() {
+            const planName = currentPlan.name;
+            const amount = currentPlan.amount.toLocaleString();
+
+            const waMessage = `${WA_MESSAGE_BASE}\n\nPlan: ${planName}\nAmount: ₦${amount}`;
+            
+            const encodedMessage = encodeURIComponent(waMessage);
+            const whatsappUrl = `https://wa.me/${WA_NUMBER}?text=${encodedMessage}`;
+            
+            // Optional: disable button before redirect
+            document.getElementById('modal-redirect-btn').disabled = true;
+
+            window.location.href = whatsappUrl;
+        }
+
+
+        // Initialize on load
+        window.onload = function() {
+            updatePaymentUI();
+            startTimer();
+            
+            // 1. Attach button to show modal
+            document.getElementById('confirm-payment-btn').addEventListener('click', showPaymentModal);
+
+            // 2. Attach button inside modal to redirect
+            document.getElementById('modal-redirect-btn').addEventListener('click', redirectToWhatsApp);
+        };
+    </script>
+</body>
+</html>
+
