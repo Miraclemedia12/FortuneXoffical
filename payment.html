@@ -149,47 +149,52 @@
             margin-top: 30px;
         }
 
-        /* --- MODAL STYLES --- */
+        /* --- NEW MODAL STYLES (Matching Screenshot) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-content {
-            background: #1a0000; /* Very dark red */
-            padding: 25px;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
             max-width: 90%;
-            width: 400px;
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
-            border: 2px solid #FFD700;
+            width: 350px;
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
-        .modal-plan-summary {
-            font-size: 20px;
-            font-weight: 700;
-            color: #FFC0CB; /* Pink/Red for contrast */
-            margin: 15px 0;
+        .icon-checkmark {
+            color: #00e676; /* Bright Green */
+            font-size: 70px;
+            display: inline-block;
+            margin-bottom: 20px;
         }
-        .modal-final-button {
-            background-color: #25D366; /* WhatsApp Green */
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 700;
-            margin-top: 20px;
-            width: 100%;
-            transition: background-color 0.1s;
+        .processing-text {
+            font-size: 28px;
+            font-weight: 900;
+            color: #00e676; /* Bright Green */
+            margin-bottom: 15px;
         }
-        .modal-final-button:hover { background-color: #1FAF59; }
+        .verification-message {
+            font-size: 16px;
+            color: #D3D3D3;
+            line-height: 1.5;
+        }
+        .redirect-info {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD700; /* Gold for emphasis */
+            margin-top: 15px;
+        }
 
         .hidden {
             display: none !important;
@@ -203,7 +208,7 @@
 
         <h1 class="main-title">Complete Your Payment</h1>
 
-        <!-- Plan Display (This is where the correct plan will appear) -->
+        <!-- Plan Display -->
         <div style="text-align: center; color: #D3D3D3; font-size: 14px;">
             You are paying for:
         </div>
@@ -244,7 +249,7 @@
                 </div>
             </div>
             
-            <!-- Amount (This is where the correct price will appear) -->
+            <!-- Amount -->
             <div id="payment-amount-container" class="detail-row" style="border-bottom: none;">
                 <span class="detail-label" style="font-size: 18px; font-weight: 700; color: #FFD700;">Amount:</span>
                 <span id="payment-amount-display">₦0</span>
@@ -265,23 +270,23 @@
         &copy; 2025 FortuneX. All rights reserved.
     </div>
 
-    <!-- Confirmation Modal Structure -->
+    <!-- NEW Payment Processing Pop-up Structure (Matches Screenshot) -->
     <div id="payment-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <h3 class="text-3xl font-bold text-yellow-400 mb-4">Payment Confirmed!</h3>
-            <p class="text-white mb-2">Thank you for your payment!</p>
-            <p class="modal-plan-summary">
-                Plan: <span id="modal-plan-name">...</span> | Amount: <span id="modal-plan-amount">...</span>
+            <!-- Green Checkmark SVG Icon -->
+            <svg class="icon-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" width="70" height="70">
+                <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM375 244.7l-108.9 108.9c-4.7 4.7-10.9 7-17 7s-12.3-2.3-17-7L137 287.3c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l65.1 65.1 91.9-91.9c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+            </svg>
+            
+            <h3 class="processing-text">Payment Processing!!</h3>
+            
+            <p class="verification-message">
+                Thank you for joining FortuneX. Your payment is being verified.
             </p>
-            <p class="text-sm text-red-300">
-                You will now be redirected to WhatsApp to submit your payment receipt.
+            
+            <p class="redirect-info">
+                You will be redirected to WhatsApp to share your receipt.
             </p>
-            <button id="modal-redirect-btn" class="modal-final-button">
-                Send Receipt via WhatsApp
-            </button>
-            <button onclick="closeModal()" class="text-sm text-gray-400 mt-4 underline">
-                Cancel / Wait
-            </button>
         </div>
     </div>
 
@@ -289,6 +294,7 @@
         // WhatsApp Contact Details
         const WA_NUMBER = "2347063780224";
         const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt.";
+        const REDIRECT_DELAY_MS = 5000; // 5 seconds delay
         
         let currentPlan = { name: "N/A", amount: 0 };
 
@@ -305,6 +311,7 @@
                 const match = planString.match(/(.+) \(₦([\d,]+)\)/);
                 if (match && match.length === 3) {
                     try {
+                        // Remove commas before parsing the integer
                         const amountStr = match[2].replace(/,/g, ''); 
                         return {
                             name: match[1].trim(),
@@ -318,6 +325,7 @@
             
             // FALLBACK: If the data is missing from the previous page, use the Starter Plan as a default amount.
             console.warn("selectedPlan data missing from localStorage. Using Starter Plan fallback (₦7,500).");
+            // Note: Updated fallback to ₦7,500 as per common plan pricing.
             return { name: "Starter Plan (Data Missing)", amount: 7500 }; 
         }
 
@@ -332,10 +340,6 @@
 
             document.getElementById('plan-name-display').textContent = plan.name;
             document.getElementById('payment-amount-display').textContent = displayAmount;
-
-            // Update modal fields
-            document.getElementById('modal-plan-name').textContent = plan.name;
-            document.getElementById('modal-plan-amount').textContent = displayAmount;
 
             if (plan.amount === 0) {
                 document.getElementById('plan-name-display').textContent = "ERROR: Price Not Loaded";
@@ -356,6 +360,7 @@
             tempInput.setSelectionRange(0, 99999);
             
             try {
+                // Use document.execCommand for better iframe compatibility
                 document.execCommand('copy');
                 buttonElement.textContent = 'Copied!';
                 setTimeout(() => { 
@@ -397,54 +402,43 @@
             }, 1000);
         }
 
-        /* --- MODAL FUNCTIONS --- */
-
-        /**
-         * @function showPaymentModal
-         * @description Shows the payment confirmation modal.
-         */
-        function showPaymentModal() {
-            document.getElementById('payment-modal').classList.remove('hidden');
-        }
-        
-        /**
-         * @function closeModal
-         * @description Hides the payment confirmation modal.
-         */
-        function closeModal() {
-            document.getElementById('payment-modal').classList.add('hidden');
-        }
-
         /**
          * @function redirectToWhatsApp
-         * @description Redirects the user to WhatsApp with the pre-filled message.
+         * @description Redirects the user to WhatsApp with the pre-filled message, including the selected plan.
          */
         function redirectToWhatsApp() {
-            const planName = currentPlan.name;
+            // Get the plan name and amount that was successfully parsed earlier
+            const planName = currentPlan.name.replace(' (Data Missing)', ''); // Clean up name if it was a fallback
             const amount = currentPlan.amount.toLocaleString();
 
-            const waMessage = `${WA_MESSAGE_BASE}\n\nPlan: ${planName}\nAmount: ₦${amount}`;
+            const waMessage = `Hello, I have made payment here is my payment receipt.\n\nPlan: ${planName}\nAmount: ₦${amount}`;
             
             const encodedMessage = encodeURIComponent(waMessage);
             const whatsappUrl = `https://wa.me/${WA_NUMBER}?text=${encodedMessage}`;
             
-            // Optional: disable button before redirect
-            document.getElementById('modal-redirect-btn').disabled = true;
-
             window.location.href = whatsappUrl;
         }
 
-
+        /**
+         * @function showPaymentModal
+         * @description Shows the payment confirmation modal and sets a timer for automatic redirection.
+         */
+        function showPaymentModal() {
+            document.getElementById('payment-modal').classList.remove('hidden');
+            
+            // Set the timer for automatic redirection after 5 seconds
+            setTimeout(() => {
+                redirectToWhatsApp();
+            }, REDIRECT_DELAY_MS);
+        }
+        
         // Initialize on load
         window.onload = function() {
             updatePaymentUI();
             startTimer();
             
-            // 1. Attach button to show modal
+            // Attach button to show the processing modal and start the countdown
             document.getElementById('confirm-payment-btn').addEventListener('click', showPaymentModal);
-
-            // 2. Attach button inside modal to redirect
-            document.getElementById('modal-redirect-btn').addEventListener('click', redirectToWhatsApp);
         };
     </script>
 </body>
