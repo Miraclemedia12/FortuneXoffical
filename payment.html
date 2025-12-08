@@ -270,7 +270,7 @@
         &copy; 2025 FortuneX. All rights reserved.
     </div>
 
-    <!-- NEW Payment Processing Pop-up Structure (Matches Screenshot) -->
+    <!-- Payment Processing Pop-up Structure -->
     <div id="payment-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <!-- Green Checkmark SVG Icon -->
@@ -284,16 +284,17 @@
                 Thank you for joining FortuneX. Your payment is being verified.
             </p>
             
+            <!-- TEXT UPDATED TO TELEGRAM -->
             <p class="redirect-info">
-                You will be redirected to WhatsApp to share your receipt.
+                You will be redirected to **Telegram** to share your receipt.
             </p>
         </div>
     </div>
 
     <script>
-        // WhatsApp Contact Details
-        const WA_NUMBER = "2347063780224";
-        const WA_MESSAGE_BASE = "Hello, I have made payment here is my payment receipt.";
+        // --- UPDATED CONTACT LOGIC ---
+        // Telegram Contact Details
+        const TG_USERNAME = "MiracleMedia0"; // Your Telegram username
         const REDIRECT_DELAY_MS = 5000; // 5 seconds delay
         
         let currentPlan = { name: "N/A", amount: 0 };
@@ -325,7 +326,6 @@
             
             // FALLBACK: If the data is missing from the previous page, use the Starter Plan as a default amount.
             console.warn("selectedPlan data missing from localStorage. Using Starter Plan fallback (₦7,500).");
-            // Note: Updated fallback to ₦7,500 as per common plan pricing.
             return { name: "Starter Plan (Data Missing)", amount: 7500 }; 
         }
 
@@ -403,20 +403,24 @@
         }
 
         /**
-         * @function redirectToWhatsApp
-         * @description Redirects the user to WhatsApp with the pre-filled message, including the selected plan.
+         * @function redirectToTelegram
+         * @description Redirects the user to Telegram DM and attempts to include the EXACT requested pre-filled text.
          */
-        function redirectToWhatsApp() {
+        function redirectToTelegram() {
             // Get the plan name and amount that was successfully parsed earlier
             const planName = currentPlan.name.replace(' (Data Missing)', ''); // Clean up name if it was a fallback
             const amount = currentPlan.amount.toLocaleString();
 
-            const waMessage = `Hello, I have made payment here is my payment receipt.\n\nPlan: ${planName}\nAmount: ₦${amount}`;
+            // Construct the message using the user's exact template
+            const tgMessage = `Hello, I have made payment here is my payment receipt.\n\nPlan: ${planName}\nAmount: ₦${amount}`;
             
-            const encodedMessage = encodeURIComponent(waMessage);
-            const whatsappUrl = `https://wa.me/${WA_NUMBER}?text=${encodedMessage}`;
+            // Encode the message to be safe for the URL
+            const encodedMessage = encodeURIComponent(tgMessage);
             
-            window.location.href = whatsappUrl;
+            // Telegram web link with the 'text' parameter
+            const telegramUrl = `https://t.me/${TG_USERNAME}?text=${encodedMessage}`;
+            
+            window.location.href = telegramUrl;
         }
 
         /**
@@ -428,7 +432,7 @@
             
             // Set the timer for automatic redirection after 5 seconds
             setTimeout(() => {
-                redirectToWhatsApp();
+                redirectToTelegram(); // Calling the updated Telegram function
             }, REDIRECT_DELAY_MS);
         }
         
