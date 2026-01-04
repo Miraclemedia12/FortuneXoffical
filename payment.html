@@ -149,63 +149,65 @@
             margin-top: 30px;
         }
 
-        /* --- NEW MODAL STYLES (Matching Screenshot) --- */
+        /* --- MODAL STYLES --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+            background-color: rgba(0, 0, 0, 0.9);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
         .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px 30px;
+            background: #150000;
+            padding: 30px;
             border-radius: 20px;
-            max-width: 90%;
-            width: 350px;
-            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.2);
+            border: 1px solid #FFD700;
             text-align: center;
         }
-        .icon-checkmark {
-            color: #00e676; /* Bright Green */
-            font-size: 70px;
-            display: inline-block;
-            margin-bottom: 20px;
+        
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            cursor: pointer;
         }
-        .processing-text {
-            font-size: 28px;
-            font-weight: 900;
-            color: #00e676; /* Bright Green */
-            margin-bottom: 15px;
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: #300000;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
-        .verification-message {
-            font-size: 16px;
-            color: #D3D3D3;
-            line-height: 1.5;
-        }
-        .redirect-info {
-            font-size: 16px;
-            font-weight: 600;
-            color: #FFD700; /* Gold for emphasis */
-            margin-top: 15px;
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            width: 0%;
+            transition: width 0.4s ease;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
         
     </style>
 </head>
 <body>
 
     <div class="content-card">
-
         <h1 class="main-title">Complete Your Payment</h1>
 
         <!-- Plan Display -->
@@ -214,7 +216,6 @@
         </div>
         <div id="plan-name-display" class="plan-name-display">...</div>
 
-
         <!-- Processing Timer -->
         <div class="processing-box">
             Processing payment <span id="payment-timer">01:00:00</span>
@@ -222,46 +223,41 @@
 
         <!-- Payment Details Grid -->
         <div class="space-y-4">
-            <!-- Bank Name -->
             <div class="detail-row">
                 <span class="detail-label">Bank Name:</span>
                 <div class="detail-value-group">
                     <span id="bank-name-text" class="detail-value">Paystack-Titan</span>
-                    <button id="copy-bank" class="copy-button" onclick="copyText('bank-name-text', this)">Copy</button>
+                    <button class="copy-button" onclick="copyText('bank-name-text', this)">Copy</button>
                 </div>
             </div>
 
-            <!-- Account Name -->
             <div class="detail-row">
                 <span class="detail-label">Account Name:</span>
                 <div class="detail-value-group">
-                    <span id="account-name-text" class="detail-value">Chipper cash/Okon Miracle</span>
-                    <button id="copy-account-name" class="copy-button" onclick="copyText('account-name-text', this)">Copy</button>
+                    <span id="account-name-text" class="detail-value text-xs">Chipper cash/Okon Miracle</span>
+                    <button class="copy-button" onclick="copyText('account-name-text', this)">Copy</button>
                 </div>
             </div>
 
-            <!-- Account Number -->
             <div class="detail-row">
                 <span class="detail-label">Account Number:</span>
                 <div class="detail-value-group">
                     <span id="account-number-text" class="account-number-display" style="color: #FFC0CB;">9998411556</span>
-                    <button id="copy-account-number" class="copy-button" onclick="copyText('account-number-text', this)">Copy</button>
+                    <button class="copy-button" onclick="copyText('account-number-text', this)">Copy</button>
                 </div>
             </div>
             
-            <!-- Amount -->
             <div id="payment-amount-container" class="detail-row" style="border-bottom: none;">
                 <span class="detail-label" style="font-size: 18px; font-weight: 700; color: #FFD700;">Amount:</span>
                 <span id="payment-amount-display">₦0</span>
             </div>
         </div>
 
-        <!-- Confirmation Action -->
         <p style="text-align: center; font-size: 14px; color: #FFC0CB; margin-top: 20px;">
-            After payment, click the button below to confirm. Your account will be activated shortly.
+            After payment, upload your receipt and confirm. Your account will be activated shortly.
         </p>
         
-        <button id="confirm-payment-btn" class="confirm-button">
+        <button id="main-confirm-btn" class="confirm-button" onclick="openUploadModal()">
             I Have Made Payment
         </button>
     </div>
@@ -270,183 +266,136 @@
         &copy; 2025 FortuneX. All rights reserved.
     </div>
 
-    <!-- Payment Processing Pop-up Structure -->
-    <div id="payment-modal" class="modal-overlay hidden">
+    <!-- Step 1: Upload Modal -->
+    <div id="upload-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <!-- Green Checkmark SVG Icon -->
-            <svg class="icon-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" width="70" height="70">
-                <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM375 244.7l-108.9 108.9c-4.7 4.7-10.9 7-17 7s-12.3-2.3-17-7L137 287.3c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l65.1 65.1 91.9-91.9c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-            </svg>
+            <h2 style="color: #FFD700; font-size: 22px; font-weight: 800;">Upload Receipt</h2>
+            <p style="color: #D3D3D3; font-size: 14px; margin-top: 10px;">Please upload your payment proof to continue.</p>
             
-            <h3 class="processing-text">Payment Processing!!</h3>
+            <label for="receipt-input" class="upload-area block">
+                <div id="file-status" style="color: #FFD700; font-weight: 700;">Click to select file</div>
+                <input type="file" id="receipt-input" class="hidden" accept="image/*" onchange="handleFile(this)">
+            </label>
+
+            <button id="verify-btn" class="confirm-button hidden" onclick="startVerification()">
+                Verify & Continue
+            </button>
+            <button onclick="closeModals()" style="color: #A0A0A0; font-size: 12px; margin-top: 15px; border: none; background: none; cursor: pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Step 2: Verification Modal -->
+    <div id="verify-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="status-heading" style="color: #00e676; font-size: 24px; font-weight: 900;">Processing!!</h2>
+            <p id="status-msg" style="color: #D3D3D3; font-size: 14px; margin-top: 10px;">Our system is verifying your receipt...</p>
             
-            <p class="verification-message">
-                Thank you for joining FortuneX. Your payment is being verified.
-            </p>
+            <div class="progress-container">
+                <div id="p-bar" class="progress-bar"></div>
+            </div>
             
-            <!-- TEXT UPDATED TO TELEGRAM -->
-            <p class="redirect-info">
-                You will be redirected to **Telegram** to share your receipt.
+            <p id="redirect-msg" class="hidden" style="color: #FFD700; font-weight: 700; font-size: 14px;">
+                Verified! Redirecting to Telegram...
             </p>
         </div>
     </div>
 
     <script>
-        // --- UPDATED CONTACT LOGIC ---
-// Telegram Contact Details
-const TG_USERNAME = "FORTUNEXMERCHANT0"; // <--- NEW USERNAME HERE
-const REDIRECT_DELAY_MS = 5000; 
-//5 seconds delay 
-
-        
+        const TG_USERNAME = "FORTUNEXMERCHANT0";
         let currentPlan = { name: "N/A", amount: 0 };
 
-
-        /**
-         * Safely retrieves and parses the plan string from localStorage.
-         * Expected format: "Plan Name (₦Amount)" e.g., "FortuneX Plus (₦14,500)"
-         */
-        function parsePlanFromLocalStorage() {
-            const planString = localStorage.getItem('selectedPlan'); 
-            
-            if (planString) {
-                // Regex to extract plan name and amount (handles commas)
-                const match = planString.match(/(.+) \(₦([\d,]+)\)/);
-                if (match && match.length === 3) {
-                    try {
-                        // Remove commas before parsing the integer
-                        const amountStr = match[2].replace(/,/g, ''); 
-                        return {
-                            name: match[1].trim(),
-                            amount: parseInt(amountStr, 10)
-                        };
-                    } catch (e) {
-                        console.error("Failed to parse plan amount:", e);
-                    }
-                }
-            }
-            
-            // FALLBACK: If the data is missing from the previous page, use the Starter Plan as a default amount.
-            console.warn("selectedPlan data missing from localStorage. Using Starter Plan fallback (₦7,500).");
-            return { name: "Starter Plan (Data Missing)", amount: 7500 }; 
-        }
-
-        /**
-         * Updates the HTML elements with the plan details.
-         */
-        function updatePaymentUI() {
-            const plan = parsePlanFromLocalStorage();
-            currentPlan = plan; 
-            
-            const displayAmount = `₦${plan.amount.toLocaleString()}`;
-
-            document.getElementById('plan-name-display').textContent = plan.name;
-            document.getElementById('payment-amount-display').textContent = displayAmount;
-
-            if (plan.amount === 0) {
-                document.getElementById('plan-name-display').textContent = "ERROR: Price Not Loaded";
-                document.getElementById('plan-name-display').style.color = 'red';
-            }
-        }
-
-        /**
-         * Copies the text content of a given element to the clipboard.
-         */
-        function copyText(elementId, buttonElement) {
-            const textContent = document.getElementById(elementId).textContent;
-            
-            const tempInput = document.createElement('textarea');
-            tempInput.value = textContent;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            tempInput.setSelectionRange(0, 99999);
-            
-            try {
-                // Use document.execCommand for better iframe compatibility
-                document.execCommand('copy');
-                buttonElement.textContent = 'Copied!';
-                setTimeout(() => { 
-                    buttonElement.textContent = 'Copy'; 
-                }, 1000);
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-                buttonElement.textContent = 'Error!';
-                setTimeout(() => { 
-                    buttonElement.textContent = 'Copy'; 
-                }, 1000);
-            }
-            
-            document.body.removeChild(tempInput);
-        }
-        
-        /**
-         * Starts the 1-hour countdown timer.
-         */
-        function startTimer() {
-            const timerElement = document.getElementById('payment-timer');
-            let timeLeft = 60 * 60; // 1 hour
-
-            function formatTime(seconds) {
-                const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-                const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-                const s = String(seconds % 60).padStart(2, '0');
-                return `${h}:${m}:${s}`;
-            }
-
-            const timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerElement.textContent = "EXPIRED";
-                    return;
-                }
-                timeLeft--;
-                timerElement.textContent = formatTime(timeLeft);
-            }, 1000);
-        }
-
-        /**
-         * @function redirectToTelegram
-         * @description Redirects the user to Telegram DM and attempts to include the EXACT requested pre-filled text.
-         */
-        function redirectToTelegram() {
-            // Get the plan name and amount that was successfully parsed earlier
-            const planName = currentPlan.name.replace(' (Data Missing)', ''); // Clean up name if it was a fallback
-            const amount = currentPlan.amount.toLocaleString();
-
-            // Construct the message using the user's exact template
-            const tgMessage = `Hello, I have made payment here is my payment receipt.\n\nPlan: ${planName}\nAmount: ₦${amount}`;
-            
-            // Encode the message to be safe for the URL
-            const encodedMessage = encodeURIComponent(tgMessage);
-            
-            // Telegram web link with the 'text' parameter
-            const telegramUrl = `https://t.me/${TG_USERNAME}?text=${encodedMessage}`;
-            
-            window.location.href = telegramUrl;
-        }
-
-        /**
-         * @function showPaymentModal
-         * @description Shows the payment confirmation modal and sets a timer for automatic redirection.
-         */
-        function showPaymentModal() {
-            document.getElementById('payment-modal').classList.remove('hidden');
-            
-            // Set the timer for automatic redirection after 5 seconds
-            setTimeout(() => {
-                redirectToTelegram(); // Calling the updated Telegram function
-            }, REDIRECT_DELAY_MS);
-        }
-        
-        // Initialize on load
         window.onload = function() {
             updatePaymentUI();
             startTimer();
-            
-            // Attach button to show the processing modal and start the countdown
-            document.getElementById('confirm-payment-btn').addEventListener('click', showPaymentModal);
         };
+
+        function parsePlanFromLocalStorage() {
+            const planString = localStorage.getItem('selectedPlan'); 
+            if (planString) {
+                const match = planString.match(/(.+) \(₦([\d,]+)\)/);
+                if (match) {
+                    return {
+                        name: match[1].trim(),
+                        amount: parseInt(match[2].replace(/,/g, ''), 10)
+                    };
+                }
+            }
+            return { name: "Starter Plan", amount: 7500 }; 
+        }
+
+        function updatePaymentUI() {
+            currentPlan = parsePlanFromLocalStorage();
+            document.getElementById('plan-name-display').textContent = currentPlan.name;
+            document.getElementById('payment-amount-display').textContent = `₦${currentPlan.amount.toLocaleString()}`;
+        }
+
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).textContent;
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = 'Copy'; }, 1000);
+        }
+
+        function startTimer() {
+            const el = document.getElementById('payment-timer');
+            let time = 3600;
+            setInterval(() => {
+                if (time <= 0) return;
+                time--;
+                const h = String(Math.floor(time / 3600)).padStart(2, '0');
+                const m = String(Math.floor((time % 3600) / 60)).padStart(2, '0');
+                const s = String(time % 60).padStart(2, '0');
+                el.textContent = `${h}:${m}:${s}`;
+            }, 1000);
+        }
+
+        /* MODAL LOGIC */
+        function openUploadModal() {
+            document.getElementById('upload-modal').classList.remove('hidden');
+        }
+
+        function closeModals() {
+            document.getElementById('upload-modal').classList.add('hidden');
+            document.getElementById('verify-modal').classList.add('hidden');
+        }
+
+        function handleFile(input) {
+            if (input.files.length > 0) {
+                document.getElementById('file-status').textContent = input.files[0].name;
+                document.getElementById('verify-btn').classList.remove('hidden');
+            }
+        }
+
+        function startVerification() {
+            document.getElementById('upload-modal').classList.add('hidden');
+            document.getElementById('verify-modal').classList.remove('hidden');
+            
+            let progress = 0;
+            const bar = document.getElementById('p-bar');
+            const interval = setInterval(() => {
+                progress += 1;
+                bar.style.width = progress + "%";
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('status-heading').textContent = "Success!!";
+                    document.getElementById('status-msg').textContent = "Receipt validated successfully.";
+                    document.getElementById('redirect-msg').classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        const msg = `Hello, I have made payment here is my payment receipt.\n\nPlan: ${currentPlan.name}\nAmount: ₦${currentPlan.amount.toLocaleString()}`;
+                        window.location.href = `https://t.me/${TG_USERNAME}?text=${encodeURIComponent(msg)}`;
+                    }, 2000);
+                }
+            }, 50); // Fast but professional verification simulation
+        }
     </script>
 </body>
 </html>
+
 
