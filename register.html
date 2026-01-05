@@ -46,7 +46,7 @@
             transition: all 0.3s;
         }
 
-        .navbar a[href="register.html"] {
+        .navbar a.active {
             border-bottom: 3px solid gold;
         }
 
@@ -141,6 +141,7 @@
             margin-top: 30px;
         }
 
+        /* Activity Feed UI */
         .activity-feed-container {
             position: fixed;
             bottom: -100px;
@@ -174,7 +175,7 @@
 <div class="navbar">
     <a href="index.html">Home</a>
     <a href="reward.html">Rewards</a>
-    <a href="register.html">Register</a>
+    <a href="register.html" class="active">Register</a>
 </div>
 
 <div class="register-container">
@@ -182,302 +183,121 @@
     
     <div class="plan-selection">
         You have selected:
-        <span id="selected-plan-display" class="plan-name"></span>
+        <span id="selected-plan-display" class="plan-name">Loading...</span>
     </div>
-‎<!DOCTYPE html>
-‎<html lang="en">
-‎<head>
-‎    <meta charset="UTF-8">
-‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎    <title>FortuneX Registration</title>
-‎    <script src="https://cdn.tailwindcss.com"></script>
-‎    <style>
-‎        /* Base Colors & Layout */
-‎        body {
-‎            margin: 0;
-‎            padding: 0;
-‎            background: radial-gradient(circle at center, #800000 0%, #300000 70%, #000000 100%);
-‎            font-family: 'Inter', sans-serif;
-‎            color: white;
-‎            min-height: 100vh;
-‎            display: flex;
-‎            flex-direction: column;
-‎            align-items: center;
-‎        }
-‎
-‎        .logo {
-‎            font-size: 35px;
-‎            font-weight: 900;
-‎            color: gold;
-‎            text-align: center;
-‎            margin-top: 20px;
-‎        }
-‎
-‎        .navbar {
-‎            display: flex;
-‎            justify-content: center;
-‎            gap: 25px;
-‎            margin-top: 10px;
-‎            padding-bottom: 15px;
-‎            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-‎            width: 100%;
-‎        }
-‎
-‎        .navbar a {
-‎            color: gold;
-‎            text-decoration: none;
-‎            font-weight: bold;
-‎            font-size: 18px;
-‎            padding: 6px 10px;
-‎            transition: all 0.3s;
-‎        }
-‎
-‎        .navbar a[href="register.html"] {
-‎            border-bottom: 3px solid gold;
-‎        }
-‎
-‎        .navbar a:hover { 
-‎            color: #ffcc00; 
-‎        }
-‎
-‎        .register-container {
-‎            width: 95%;
-‎            max-width: 450px;
-‎            margin: 20px auto;
-‎            background: rgba(0, 0, 0, 0.2);
-‎            border-radius: 20px;
-‎            padding: 30px 20px;
-‎            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-‎            flex-grow: 1;
-‎        }
-‎
-‎        .main-title {
-‎            font-size: 28px;
-‎            font-weight: bold;
-‎            color: white;
-‎            text-align: center;
-‎            margin-bottom: 15px;
-‎        }
-‎
-‎        .plan-selection {
-‎            font-size: 18px;
-‎            color: white;
-‎            text-align: center;
-‎            line-height: 1.5;
-‎            margin-bottom: 30px;
-‎            font-weight: 500;
-‎        }
-‎
-‎        .plan-name {
-‎            font-size: 20px;
-‎            font-weight: 900;
-‎            color: gold;
-‎            display: block;
-‎            margin-top: 5px;
-‎        }
-‎        
-‎        .form-group {
-‎            margin-bottom: 25px;
-‎        }
-‎
-‎        .form-group label {
-‎            display: block;
-‎            margin-bottom: 8px;
-‎            font-size: 16px;
-‎            font-weight: 700;
-‎            color: white;
-‎        }
-‎
-‎        .form-group input {
-‎            width: 100%;
-‎            padding: 15px 20px;
-‎            border: none;
-‎            border-radius: 15px;
-‎            background-color: #5d0707;
-‎            color: white;
-‎            font-size: 17px;
-‎            box-sizing: border-box;
-‎            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
-‎            transition: background-color 0.3s, border 0.3s;
-‎        }
-‎
-‎        .form-group input::placeholder {
-‎            color: #ddd; 
-‎            font-weight: 400;
-‎        }
-‎        
-‎        .form-group input:focus {
-‎            outline: none;
-‎            background-color: #700a0a;
-‎            border: 1px solid gold;
-‎        }
-‎        
-‎        .payment-button {
-‎            width: 100%;
-‎            padding: 20px;
-‎            background: linear-gradient(to bottom, #FFD700, #FFA500);
-‎            color: #111;
-‎            border: none;
-‎            border-radius: 15px;
-‎            font-size: 20px;
-‎            font-weight: 900;
-‎            cursor: pointer;
-‎            box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
-‎            transition: transform 0.2s, box-shadow 0.2s;
-‎            margin-top: 30px;
-‎        }
-‎
-‎        .activity-feed-container {
-‎            position: fixed;
-‎            bottom: -100px;
-‎            left: 50%;
-‎            transform: translateX(-50%);
-‎            z-index: 900; 
-‎            width: 90%;
-‎            max-width: 380px;
-‎            padding: 10px 15px;
-‎            background: rgba(0, 0, 0, 0.9);
-‎            border: 1px solid gold;
-‎            border-radius: 12px;
-‎            display: flex;
-‎            align-items: center;
-‎            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-‎        }
-‎
-‎        .show-activity { bottom: 20px; }
-‎        .activity-icon { color: #25D366; margin-right: 10px; font-size: 20px; flex-shrink: 0; }
-‎        #activity-text { flex-grow: 1; font-size: 14px; color: white; }
-‎        .activity-user { color: #FFD700; font-weight: 700; }
-‎        .activity-amount { color: #25D366; font-weight: 900; }
-‎        .activity-amount.withdrawal { color: #FF6347; }
-‎        .activity-time { color: #aaa; font-size: 12px; display: block; }
-‎        .footer { flex-shrink: 0; width: 100%; text-align: center; padding: 20px 0; color: white; font-size: 14px; }
-‎    </style>
-‎</head>
-‎<body>
-‎
-‎<div class="logo">FortuneX</div>
-‎<div class="navbar">
-‎    <a href="index.html">Home</a>
-‎    <a href="reward.html">Rewards</a>
-‎    <a href="register.html">Register</a>
-‎</div>
-‎
-‎<div class="register-container">
-‎    <div class="main-title">Create Your Account</div>
-‎    
-‎    <div class="plan-selection">
-‎        You have selected:
-‎        <span id="selected-plan-display" class="plan-name"></span>
-‎    </div>
-‎
-‎    <form id="registration-form">
-‎        <div class="form-group">
-‎            <label for="full-name">Full Name</label>
-‎            <input type="text" id="full-name" placeholder="Enter your full name" required>
-‎        </div>
-‎        
-‎        <div class="form-group">
-‎            <label for="username">Username</label>
-‎            <input type="text" id="username" placeholder="Choose a unique username" required>
-‎        </div>
-‎        
-‎        <div class="form-group">
-‎            <label for="email">Email Address</label>
-‎            <input type="email" id="email" placeholder="you@example.com" required>
-‎        </div>
-‎
-‎        <div class="form-group">
-‎            <label for="phone-number">Phone Number</label>
-‎            <input type="tel" id="phone-number" placeholder="Enter your phone number" required>
-‎        </div>
-‎
-‎        <div class="form-group">
-‎            <label for="password">Password</label>
-‎            <input type="password" id="password" placeholder="Create a strong password" required>
-‎        </div>
-‎
-‎        <button type="submit" class="payment-button">Register and Proceed to Payment</button>
-‎    </form>
-‎</div>
-‎
-‎<div class="footer">
-‎    © 2025 FortuneX. All rights reserved.
-‎</div>
-‎
-‎<div id="activity-feed" class="activity-feed-container">
-‎    <div class="activity-icon">
-‎        <svg id="activity-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
-‎    </div>
-‎    <div id="activity-text">Activity Feed Loading...</div>
-‎</div>
-‎
-‎<script>
-‎const ACTIVITIES = [
-‎    { name: "Bello A.", type: "withdrawn", amount: "40,000", location: "Sokoto", time: "1 minute ago" },
-‎    { name: "Ngozi E.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Lagos", time: "8 minutes ago" },
-‎    { name: "Sadiq J.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Kano", time: "3 minutes ago" },
-‎    { name: "Chinedu R.", type: "withdrawn", amount: "150,000", location: "Owerri", time: "15 minutes ago" },
-‎    { name: "Amaka O.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Enugu", time: "just now" }
-‎];
-‎let activityIndex = 0;
-‎
-‎function cycleActivityFeed() {
-‎    const activityElement = document.getElementById('activity-text');
-‎    const feedContainer = document.getElementById('activity-feed');
-‎    const activitySvg = document.getElementById('activity-svg');
-‎    if (!activityElement || !feedContainer) return;
-‎
-‎    const activity = ACTIVITIES[activityIndex];
-‎    let messageHtml = `<span class="activity-user">${activity.name}</span> from ${activity.location} has ${activity.type === 'subscribed' ? 'subscribed for FortuneX ' + activity.plan : 'withdrawn'} <span class="activity-amount ${activity.type === 'withdrawn' ? 'withdrawal' : ''}">₦${activity.amount}</span>`;
-‎    let svgIcon = activity.type === 'subscribed' ? `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 7h.01"/><path d="M16 11l2 2 4-4"/>` : `<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>`;
-‎
-‎    activityElement.innerHTML = `${messageHtml}<span class="activity-time">${activity.time}</span>`;
-‎    activitySvg.innerHTML = svgIcon;
-‎    feedContainer.classList.add('show-activity');
-‎    activityIndex = (activityIndex + 1) % ACTIVITIES.length;
-‎}
-‎
-‎function startActivityCycle() {
-‎    const feedContainer = document.getElementById('activity-feed');
-‎    cycleActivityFeed(); 
-‎    setTimeout(() => {
-‎        feedContainer.classList.remove('show-activity');
-‎        setTimeout(() => { startActivityCycle(); }, 9000);
-‎    }, 10000);
-‎}
-‎
-‎document.addEventListener('DOMContentLoaded', () => {
-‎    const planDisplay = document.getElementById('selected-plan-display');
-‎    const selectedPlan = localStorage.getItem('selectedPlan');
-‎    
-‎    if (selectedPlan) {
-‎        planDisplay.textContent = selectedPlan;
-‎    } else {
-‎        window.location.href = 'reward.html'; 
-‎    }
-‎    
-‎    const registrationForm = document.getElementById('registration-form');
-‎    registrationForm.addEventListener('submit', function(e) {
-‎        e.preventDefault(); 
-‎        
-‎        if (registrationForm.checkValidity()) {
-‎            // Determine redirect URL based on selected plan
-‎            const plan = localStorage.getItem('selectedPlan') || "";
-‎            let paystackLink = "https://paystack.shop/pay/fortunex-starter"; // Default
-‎
-‎            if (plan.includes("Plus")) {
-‎                paystackLink = "https://paystack.shop/pay/fortunex-plus";
-‎            }
-‎
-‎            // Redirect to Paystack
-‎            window.location.href = paystackLink;
-‎        }
-‎    });
-‎
-‎    startActivityCycle();
-‎});
-‎</script>
-‎</body>
-‎</html>
-‎
+
+    <form id="registration-form">
+        <div class="form-group">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a unique username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input type="tel" id="phone-number" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a strong password" required>
+        </div>
+
+        <button type="submit" class="payment-button">Register and Proceed to Payment</button>
+    </form>
+</div>
+
+<div class="footer">
+    &copy; 2025 FortuneX. All rights reserved.
+</div>
+
+<div id="activity-feed" class="activity-feed-container">
+    <div class="activity-icon">
+        <svg id="activity-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </div>
+    <div id="activity-text">Activity Feed Loading...</div>
+</div>
+
+<script>
+const ACTIVITIES = [
+    { name: "Bello A.", type: "withdrawn", amount: "40,000", location: "Sokoto", time: "1 minute ago" },
+    { name: "Ngozi E.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Lagos", time: "8 minutes ago" },
+    { name: "Sadiq J.", type: "subscribed", amount: "14,000", plan: "Plus Plan", location: "Kano", time: "3 minutes ago" },
+    { name: "Chinedu R.", type: "withdrawn", amount: "150,000", location: "Owerri", time: "15 minutes ago" },
+    { name: "Amaka O.", type: "subscribed", amount: "7,500", plan: "Starter Plan", location: "Enugu", time: "just now" }
+];
+let activityIndex = 0;
+
+function cycleActivityFeed() {
+    const activityElement = document.getElementById('activity-text');
+    const feedContainer = document.getElementById('activity-feed');
+    const activitySvg = document.getElementById('activity-svg');
+    if (!activityElement || !feedContainer) return;
+
+    const activity = ACTIVITIES[activityIndex];
+    let messageHtml = `<span class="activity-user">${activity.name}</span> from ${activity.location} has ${activity.type === 'subscribed' ? 'subscribed for FortuneX ' + activity.plan : 'withdrawn'} <span class="activity-amount ${activity.type === 'withdrawn' ? 'withdrawal' : ''}">₦${activity.amount}</span>`;
+    let svgIcon = activity.type === 'subscribed' ? `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 7h.01"/><path d="M16 11l2 2 4-4"/>` : `<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>`;
+
+    activityElement.innerHTML = `${messageHtml}<span class="activity-time">${activity.time}</span>`;
+    activitySvg.innerHTML = svgIcon;
+    feedContainer.classList.add('show-activity');
+    activityIndex = (activityIndex + 1) % ACTIVITIES.length;
+}
+
+function startActivityCycle() {
+    const feedContainer = document.getElementById('activity-feed');
+    cycleActivityFeed(); 
+    setTimeout(() => {
+        feedContainer.classList.remove('show-activity');
+        setTimeout(() => { startActivityCycle(); }, 9000);
+    }, 10000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const planDisplay = document.getElementById('selected-plan-display');
+    const selectedPlan = localStorage.getItem('selectedPlan');
+    
+    if (selectedPlan) {
+        planDisplay.textContent = selectedPlan;
+    } else {
+        // Fallback if no plan is detected
+        planDisplay.textContent = "Starter Plan (₦7,500)";
+        localStorage.setItem('selectedPlan', "Starter Plan (₦7,500)");
+    }
+    
+    const registrationForm = document.getElementById('registration-form');
+    registrationForm.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        if (registrationForm.checkValidity()) {
+            const plan = localStorage.getItem('selectedPlan') || "";
+            
+            // PAYSTACK LINK REDIRECTION LOGIC
+            let paystackLink = "https://paystack.shop/pay/fortunex-starter"; // Default link
+
+            if (plan.includes("Plus")) {
+                paystackLink = "https://paystack.shop/pay/fortunex-plus";
+            }
+            // You can add more conditions if there are other plans
+
+            // Redirect to the chosen Paystack link
+            window.location.href = paystackLink;
+        }
+    });
+
+    startActivityCycle();
+});
+</script>
+</body>
+</html>
+
+
